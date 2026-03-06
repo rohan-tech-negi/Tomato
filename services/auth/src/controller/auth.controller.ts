@@ -2,6 +2,7 @@
 import User from "../model/User.js"
 import jwt from "jsonwebtoken"
 import TryCatch from "../middleware/trycatch.js"
+import { AuthenticatedRequest } from "../middleware/isAuth.js"
 
 export const loginUser = TryCatch(async (req,res)=>{
     const {email , name, picture} = req.body
@@ -27,4 +28,10 @@ export const loginUser = TryCatch(async (req,res)=>{
         })
 })
 
-const allowRoles
+const allowedRoles = ["customer" , "rider" , "seller"] as coonst;
+type Role = (typeof allowedRoles)[number];
+
+
+export const addUserRole = TryCatch(async (req: AuthenticatedRequest, res)=>{
+    if(!requser?.)
+})
