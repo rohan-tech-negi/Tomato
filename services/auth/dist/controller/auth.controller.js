@@ -21,3 +21,4 @@ export const loginUser = TryCatch(async (req, res) => {
         user,
     });
 });
+const allowRoles;
