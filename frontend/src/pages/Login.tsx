@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { authService } from '../main'
 import toast from 'react-hot-toast'
-import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
+import {  useGoogleLogin } from '@react-oauth/google';
 import {FcGoogle} from 'react-icons/fc'
 
 const Login = () => {
