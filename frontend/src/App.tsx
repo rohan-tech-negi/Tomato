@@ -3,6 +3,8 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import React from 'react'
 import Home from './pages/Home'
 import Login from './pages/Login'
+
+import {Toaster} from 'react-hot-toast'
 const App = () => {
   return (
     <BrowserRouter>
@@ -10,6 +12,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login></Login>} />
       </Routes>
+      <Toaster />
     </BrowserRouter>
   )
 }
