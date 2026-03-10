@@ -17,7 +17,7 @@ const SelectRole = () => {
 
     const addRole = async()=> {
         try {
-            const {data} = await axios.post(`${authService}/api/auth/add/role`, {role}, {
+            const {data} = await axios.put(`${authService}/api/auth/add/role`, {role}, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
@@ -54,6 +54,11 @@ const SelectRole = () => {
           </button>
         ))}
       </div>
+      <button disabled={!role} onClick={addRole} className={`w-full rounded-xl px-4 py-3 text-sm font-semibold transition ${
+              role
+                ? "border-[#E23744] bg-[#E23744] text-white hover:bg[#d32f3a]"
+                : "bg-gray-200 text-gray-400 cursor-not-allowed"
+            }`}>Next</button>
     </div>
   </div>
 );
