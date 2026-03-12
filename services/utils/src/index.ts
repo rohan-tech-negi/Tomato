@@ -3,9 +3,12 @@ import express from "express";
 
 import dotenv from "dotenv";
 import cloudinary from "cloudinary";
+import cors from "cors";
 dotenv.config();
 
 const app = express();
+
+app.use(cors());
 
 const {CLOUD_NAME, CLOUD_API_KEY, CLOUD_SECRET_KEY} = process.env;
 
