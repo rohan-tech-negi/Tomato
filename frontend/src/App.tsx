@@ -21,6 +21,7 @@ const App = () => {
         <Route element={<ProtectedRoute></ProtectedRoute>}>
          <Route path="/" element={<Home />} />
          <Route path='/select-role' element={<SelectRole></SelectRole>}></Route>
+         
         </Route>
 
        
