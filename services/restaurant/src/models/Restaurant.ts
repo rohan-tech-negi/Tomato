@@ -24,7 +24,7 @@ const schema = new Schema<Irestaurant>({
     image: {type: String, required: true},
     ownerId: {type: String, required: true},
     phone: {type: Number, required: true},
-    isVarified: {type: Boolean, default: false},
+    isVarified: {type: Boolean, default: true},
     autoLocation: {
         type: {
             type: String,
@@ -35,8 +35,12 @@ const schema = new Schema<Irestaurant>({
             type: [Number],
             required: true
         },
-        formattedAddress: {type: String, required: true}
+        formattedAddress: {type: String}
     },
     isOpen: {type: Boolean, default: false},
-    createdAt: {type: Date, default: Date.now}
-})
+    
+}, {timestamps: true});
+
+schema.index({autoLocation: "2dsphere"});
+
+export default mongoose.model<Irestaurant>("Restaurant", schema);
