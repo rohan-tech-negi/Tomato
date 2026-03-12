@@ -5,7 +5,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { PiMapPinDuotone } from "react-icons/pi";
 import { CiSearch } from "react-icons/ci";
 const Navbar = () => {
-    const {isAuth} = useAppData()
+    const {isAuth, city} = useAppData()
     const currLocation = useLocation()
 
     const isHomePage = currLocation.pathname === "/"
@@ -50,7 +50,7 @@ const Navbar = () => {
 
                     <div className='flex items-center gap-3 px-3 border-r text-gray-700'>
                         <PiMapPinDuotone className='h-4 w-4 text-red-500'/>
-                        <span className='text-sm truncate max-w-35'>city</span>
+                        <span className='text-sm truncate max-w-35'>{city}</span>
                     </div>
                     <div className='flex flex-1 items-center gap-2 px-3'>
                         <CiSearch className='h-4 w-4 text-gray-400'/>
