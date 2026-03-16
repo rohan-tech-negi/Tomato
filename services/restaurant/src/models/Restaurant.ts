@@ -6,7 +6,7 @@ export interface Irestaurant extends Document{
     image: string;
     ownerId: string;
     phone: number;
-    isVarified: boolean;
+    isVerified: boolean;
 
     autoLocation: {
         type: "Point",
@@ -24,7 +24,7 @@ const schema = new Schema<Irestaurant>({
     image: {type: String, required: true},
     ownerId: {type: String, required: true},
     phone: {type: Number, required: true},
-    isVarified: {type: Boolean, default: true},
+    isVerified: {type: Boolean, default: true},
     autoLocation: {
         type: {
             type: String,
