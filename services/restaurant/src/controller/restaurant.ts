@@ -47,7 +47,7 @@ export const addRestaurant = TryCatch(async(req:AuthenticatedRequest,res)=>{
         })
     }
 
-    const {data: uploadRsult} = await axios(`${process.env.UTILS_SERVICE}/api.upload`, {
+    const {data: uploadRsult} = await axios.post(`${process.env.UTILS_SERVICE}/api/upload`, {
         buffer: fileBuffer.content,
     });
 
