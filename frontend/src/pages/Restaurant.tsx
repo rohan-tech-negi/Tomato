@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // import { Irestaurant } from '../types'
 import axios from 'axios'
 import { useState
@@ -31,6 +31,11 @@ const Restaurant = () => {
       setLoading(false)
     }
   }
+   useEffect(()=>{
+    fetchRestaurant()
+   },[])
+
+   if(loading) return <div className='flex min-g-screen items-center justify-center'><p className='text-gray-500'>Loading your Restaurant....</p></div>
   return (
     <div>Restaurant</div>
   )
