@@ -64,7 +64,7 @@ export const AppProvider = ({children} : AppProviderProps)=>{
                         formattedAddress: "current location"
                 })
                 setCity("Failed to load")
-                
+                setLoadingLocation(false)
                 }
         })
     },[])
