@@ -8,6 +8,7 @@ export interface IUser {
     password: string,
     role: string,
     image: string,
+    restaurantId: string
 }
 
 
