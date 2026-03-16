@@ -4,6 +4,8 @@ import { useAppData } from '../context/AppContext'
 import toast from 'react-hot-toast'
 import { restaurantService } from '../main'
 import axios from 'axios'
+import { BiCloudUpload } from "react-icons/bi";
+import { FaMapPin } from "react-icons/fa";
 const AddRestaurant = () => {
 
     const [name, setName] = useState("")
@@ -49,7 +51,30 @@ const AddRestaurant = () => {
     <div className='min-h-screen bg-gray-50 px-4 py-6'>
         <div className='mx-auto max-w-lg rounded-xl bg-white p-6 shadow-sm space-y-5'>
             <h1 className='text-xl font-semibold'>Add Your Restaurant</h1>
-            <input type="text" />
+            <input type="text" placeholder='Restaurant Name' value={name} onChange={(e)=>setName(e.target.value)} className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500'/>
+
+            <input type="Number" placeholder='Contact Number' value={phone} onChange={(e)=>setPhone(e.target.value)} className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500'/>
+
+
+            <textarea  placeholder='Restaurant Description' value={description} onChange={(e)=>setDescription(e.target.value)} className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500'/>
+
+                <label className='flex cursor-pointer items-center gap-3 rounded-lg border p-4 text-sm text-gray-600 hover:bg-gray-50'><BiCloudUpload className='h-5 w-5 text-red-500'/>
+                    {image? image.name: "Upload Restaurant Image"}
+                    <input type="file" accept='image/*' hidden onChange={(e)=> setImage(e.target.files?.[0] || null)}/>
+                </label>
+
+                <div className='flex items-start gap-3 rounded-lg border p-4'>
+                    <FaMapPin className='h-5 w-5 mt-0.5 tet-red-500'/>
+                    <div className='text-sm'>
+                        {
+                            loadingLocation ? "Fetching your location .." : location?.formattedAddress || "Location not available"
+                        }
+                    </div>
+                </div>
+
+                <button onClick={handleSubmit} disabled={submitting} className='w-full rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600 disabled:bg-gray-400'>
+                    {submitting ? "Adding Restaurant..." : "Add Restaurant"}
+                </button>
         </div>
     </div>
   )
