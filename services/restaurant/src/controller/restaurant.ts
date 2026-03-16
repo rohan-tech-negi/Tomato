@@ -1,6 +1,8 @@
+import getBuffer from "../config/datauri.js";
 import { AuthenticatedRequest } from "../middleware/isAuth.js";
 import TryCatch from "../middleware/trycatch.js";
 import Restaurant from "../models/Restaurant.js";
+import axios from "axios";
 
 export const addRestaurant = TryCatch(async(req:AuthenticatedRequest,res)=>{
     const user = req.user;
@@ -28,4 +30,42 @@ export const addRestaurant = TryCatch(async(req:AuthenticatedRequest,res)=>{
             message: "Please provide all the required fields",
         })
     }
+
+    const file = req.file;
+
+    if(!file){
+         return res.status(400).json({
+            message: "Please provide an image",
+        })
+    }
+
+    const fileBuffer = getBuffer(file);
+
+    if(!fileBuffer?.content){
+        return res.status(400).json({
+            message: "FAiled to create file buffer",
+        })
+    }
+
+    const {data: uploadRsult} = await axios(`${process.env.UTILS_SERVICE}/api.upload`, {
+        buffer: fileBuffer.content,
+    });
+
+    const restaurant = await Restaurant.create({
+        name,
+        description,
+        phone,
+        image: uploadRsult.url,
+        ownerId: user._id,
+        autoLocation:{
+            type:"Point",
+            coordinates:[Number(longitude), Number(latitude)],
+            formattedAddress,
+        }
+    })
+
+    return res.status(201).json({
+        message: "Restaurant added successfully",
+        restaurant,
+    })
 })
