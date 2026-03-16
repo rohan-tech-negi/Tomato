@@ -46,7 +46,12 @@ const AddRestaurant = () => {
         
     }
   return (
-    <div>AddRestaurant</div>
+    <div className='min-h-screen bg-gray-50 px-4 py-6'>
+        <div className='mx-auto max-w-lg rounded-xl bg-white p-6 shadow-sm space-y-5'>
+            <h1 className='text-xl font-semibold'>Add Your Restaurant</h1>
+            <input type="text" />
+        </div>
+    </div>
   )
 }
 
