@@ -99,6 +99,9 @@ export const fetchMyRestaurant = TryCatch(async(req:AuthenticatedRequest,res)=>{
 
         return res.json({restaurant, token})
     }
+
+    res.json({restaurant})
 }
     
 )
+
