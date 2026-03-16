@@ -26,3 +26,21 @@ export interface AppContextType{
     city: string;
 
 }
+
+export interface Irestaurant {
+    _id: string;
+    name: string;
+    description: string;
+    image: string;
+    ownerId: string;
+    phone: number;
+    isVarified: boolean;
+
+    autoLocation: {
+        type: "Point",
+        coordinates: [number, number];
+        formattedAddress: string; 
+    };
+    isOpen: boolean;
+    createdAt: Date;
+}
