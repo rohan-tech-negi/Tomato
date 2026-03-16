@@ -6,6 +6,7 @@ import { useState
  } from 'react'
 import { restaurantService } from '../main'
 import type { IRestaurant } from '../types'
+import AddRestaurant from '../components/AddRestaurant'
 const Restaurant = () => {
 
   const [restaurant, setRestaurant] = useState<IRestaurant | null>(null)
@@ -36,6 +37,10 @@ const Restaurant = () => {
    },[])
 
    if(loading) return <div className='flex min-g-screen items-center justify-center'><p className='text-gray-500'>Loading your Restaurant....</p></div>
+
+   if(!restaurant){
+    return <AddRestaurant></AddRestaurant>
+   }
   return (
     <div>Restaurant</div>
   )
