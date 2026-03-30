@@ -24,6 +24,7 @@ const Restaurant = () => {
 
       if(data.token){
         localStorage.setItem("token", data.token)
+        window.location.reload()
       }
     } catch (error) {
         console.log(error)   
