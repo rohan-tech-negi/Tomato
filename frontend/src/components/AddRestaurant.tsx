@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { useState } from 'react'
 import { useAppData } from '../context/AppContext'
 import toast from 'react-hot-toast'
@@ -6,7 +6,11 @@ import { restaurantService } from '../main'
 import axios from 'axios'
 import { BiCloudUpload } from "react-icons/bi";
 import { FaMapPin } from "react-icons/fa";
-const AddRestaurant = () => {
+
+interface props{
+    fetchMyRestaurant:()=> Promise<void>;
+}
+const AddRestaurant = ({fetchMyRestaurant}:props) => {
 
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
@@ -39,8 +43,15 @@ const AddRestaurant = () => {
                 }
             })
             toast.success("Restaurant added successfully")
+            fetchMyRestaurant()
         } catch (error: any) {
-           toast.error(error.response.data.message) 
+    const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Something went wrong";
+
+    toast.error(message);
+
         }finally{
             setSubmitting(false)
         }

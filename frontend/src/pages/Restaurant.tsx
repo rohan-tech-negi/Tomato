@@ -40,7 +40,7 @@ const Restaurant = () => {
    if(loading) return <div className='flex min-g-screen items-center justify-center'><p className='text-gray-500'>Loading your Restaurant....</p></div>
 
    if(!restaurant){
-    return <AddRestaurant></AddRestaurant>
+    return <AddRestaurant fetchMyRestaurant={fetchRestaurant}></AddRestaurant>
    }
   return (
     <div>Restaurant</div>
