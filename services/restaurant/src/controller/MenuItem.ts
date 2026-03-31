@@ -62,4 +62,16 @@ export const addMenuItem = TryCatch(async(req: AuthenticatedRequest, res)=>{
     })
 })
 
-export const getAllItems = TryCatch
+export const getAllItems = TryCatch(async(req:AuthenticatedRequest, res)=>{
+    const {id} = req.params;
+    if(!id){
+        return res.status(400).json({
+            message: "id is required",
+        })
+    }
+
+    const items = await MenuItems.find({
+        restaurantId: id
+    })
+    res.json(items)
+})
