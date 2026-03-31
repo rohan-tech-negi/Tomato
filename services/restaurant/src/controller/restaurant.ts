@@ -136,6 +136,29 @@ export const updateStatusRestaurant = TryCatch(async(req:AuthenticatedRequest, r
     })
 })
 
+export const updateRestaurant = TryCatch(async(req:AuthenticatedRequest, res)=>{
+    if(!req.user){
+        return res.status(403).json({
+            message: "Please login"
+        })
+    }
+    const {name, description} = req.body;
+    
+    const restaurant = await Restaurant.findOneAndUpdate({ownerId: req.user._id}, 
+        {name, description},
+        {new: true});
+
+    if(!restaurant){
+        return res.status(404).json({
+            message: "Restaurant not found"
+        })
+    }
+    res.json({
+        message: "Restaurant updated ",
+        restaurant,
+    })
+})
+
 
 
 

@@ -21,7 +21,7 @@ const RestaurantProfile = ({restaurant, isSeller, onUpdate}:props) => {
     const toggleOpenStatus  = async()=>{
         try {
             const { data } = await axios.put(
-                `${restaurantService}/api/restaurant/my/status`,
+                `${restaurantService}/api/restaurant/status`,
                 { status: !isOpen },
                 {
                     headers:{
