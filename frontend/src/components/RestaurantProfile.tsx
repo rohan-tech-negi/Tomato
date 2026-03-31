@@ -20,19 +20,21 @@ const RestaurantProfile = ({restaurant, isSeller, onUpdate}:props) => {
 
     const toggleOpenStatus  = async()=>{
         try {
-            const {data} = await axios.put(`${restaurantService}/api/restaurant/my/status`),
-            {status: !isOpen},
-            {
-                headers:{
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+            const { data } = await axios.put(
+                `${restaurantService}/api/restaurant/my/status`,
+                { status: !isOpen },
+                {
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem("token")}`
+                    }
                 }
-            }
+            )
             toast.success(data.message)
             setIsOpen(data.restaurant.isOpen)
             
         } catch (error:any) {
             console.log(error)
-            toast.error(error.response.data.message)
+            toast.error(error.response?.data?.message || "Failed to update status")
         }
     }
 
@@ -48,7 +50,7 @@ const RestaurantProfile = ({restaurant, isSeller, onUpdate}:props) => {
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             })
-            ontimeupdate(data.restaurant)
+            onUpdate(data.restaurant)
             toast.success(data.message)
         } catch (error) {
             console.log(error)
@@ -75,9 +77,7 @@ const RestaurantProfile = ({restaurant, isSeller, onUpdate}:props) => {
                         }
                         <div className="mt-1 flex items-center gap-2 text-sm text-gray-500">
                             <BiMapPin className="h-4 w-4 text-red-500"/>
-                            {
-                                restaurant.autolocation.formattedAddress || "Location unavailable"
-                            }
+                            {restaurant.autoLocation?.formattedAddress || "Location unavailable"}
                         </div>
                     </div>
                     <button onClick={()=>setEditMode(!editMode)} className="text-gray-500 hover:text-black"><BiEdit size={18}></BiEdit></button>
@@ -106,7 +106,7 @@ const RestaurantProfile = ({restaurant, isSeller, onUpdate}:props) => {
                     )}
 
                     {
-                        isSeller && <button onClick={toggleOpenStatus} className={`rounded--lg px-4 py-1.5 text-sm font-medium text-white ${isOpen ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"}`}>{isOpen ? "CLose Restaurant" : "Open restaurant"}</button>
+                        isSeller && <button onClick={toggleOpenStatus} className={`rounded-lg px-4 py-1.5 text-sm font-medium text-white ${isOpen ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"}`}>{isOpen ? "Close Restaurant" : "Open Restaurant"}</button>
                     }
                 </div>
             </div>
