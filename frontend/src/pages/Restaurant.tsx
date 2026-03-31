@@ -8,6 +8,8 @@ import { restaurantService } from '../main'
 import type { IRestaurant } from '../types'
 import AddRestaurant from '../components/AddRestaurant'
 import RestaurantProfile from '../components/RestaurantProfile'
+import AddMenuItem from '../components/AddMenuItem'
+import MenuItems from '../components/MenuItems'
 
 type SellerTab = "menu" | "add-item" | "sales";
 const Restaurant = () => {
@@ -64,8 +66,8 @@ const Restaurant = () => {
         </div>
 
         <div className='p-5 '>
-            {Tab === "menu" && <p>Menu Page</p>}
-            {Tab === "add-item" && <p>Add Item Page</p>}
+            {Tab === "menu" && <MenuItems></MenuItems>}
+            {Tab === "add-item" && <AddMenuItem></AddMenuItem>}
             {Tab === "sales" && <p>Sales Page</p>}
         </div>
       </div>
