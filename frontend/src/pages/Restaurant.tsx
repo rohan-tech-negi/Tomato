@@ -67,7 +67,7 @@ const Restaurant = () => {
 
         <div className='p-5 '>
             {Tab === "menu" && <MenuItems></MenuItems>}
-            {Tab === "add-item" && <AddMenuItem></AddMenuItem>}
+            {Tab === "add-item" && <AddMenuItem onItemAdded={()=>{}}></AddMenuItem>}
             {Tab === "sales" && <p>Sales Page</p>}
         </div>
       </div>

@@ -30,7 +30,7 @@ const AddMenuItem = ({onItemAdded}:{onItemAdded: ()=>void}) => {
         formData.append("name", name)
         formData.append("description", description)
         formData.append("price", price)
-        formData.append("file", image)
+        formData.append("image", image)
 
         try {
             setLoading(true)
@@ -44,7 +44,11 @@ const AddMenuItem = ({onItemAdded}:{onItemAdded: ()=>void}) => {
             onItemAdded()
         } catch (error) {
             console.log(error)
-            toast.error("failed to add items")
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || "Failed to add item")
+            } else {
+                toast.error("Failed to add item")
+            }
         }
         finally{
             setLoading(false)
