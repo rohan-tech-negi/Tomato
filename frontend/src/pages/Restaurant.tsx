@@ -8,11 +8,15 @@ import { restaurantService } from '../main'
 import type { IRestaurant } from '../types'
 import AddRestaurant from '../components/AddRestaurant'
 import RestaurantProfile from '../components/RestaurantProfile'
+
+type SellerTab = "menu" | "add-item" | "sales";
 const Restaurant = () => {
 
   const [restaurant, setRestaurant] = useState<IRestaurant | null>(null)
 
   const [loading , setLoading] = useState(true)
+
+  const[Tab, setTab] = useState<SellerTab>("menu")
 
   const fetchRestaurant = async () => {
     try {
@@ -46,6 +50,19 @@ const Restaurant = () => {
   return (
     <div className='min-h-screen bg-gray-50 px-4 py--6 space-y-6'>
       <RestaurantProfile restaurant={restaurant} onUpdate={setRestaurant} isSeller={true}></RestaurantProfile>
+      <div className='rounded-xl bg-white shadow-sm'>
+        <div className='flex border-b'>
+          {[
+            {key: "menu", label: "Menu Items"},
+            {key: "add-item", label: "Add Item"},
+            {key: "sales", label: "sales"},
+          ].map((tab)=>(
+            <button key={tab.key} onClick={()=>setTab(tab.key as SellerTab)} className={`flex-1 px-4 py-3 text-sm font-medium trannsition ${Tab === tab.key ? "border-b-2 border-red-500 text-red-500" : "text-gray-500 hover:text-gray-700"}`}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
