@@ -3,6 +3,7 @@ import connectDB from "./config/db.js";
 import restaurantRoutes from "./routes/restaurant.js";
 import dotenv from "dotenv";
 import cors from "cors";
+import itemRoutes from "./routes/menuItem.js"
 dotenv.config();
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json())
 
 
 app.use("/api/restaurant", restaurantRoutes)
+app.use("/api/item", itemRoutes)
 
 app.listen(PORT, () => {
     console.log(`Restaurent Server is running on port ${PORT}`);
