@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { restaurantService } from "../main";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 
-const AddMenuItem = () => {
+const AddMenuItem = ({onItemAdded}:{onItemAdded: ()=>void}) => {
     const[name, setName] = useState("");
     const[description, setDescription] = useState("");
     const[price, setPrice] = useState("")
@@ -43,6 +44,9 @@ const AddMenuItem = () => {
         } catch (error) {
             console.log(error)
             toast.error("failed to add items")
+        }
+        finally{
+            setLoading(false)
         }
     }
   return (
