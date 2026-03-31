@@ -116,4 +116,45 @@ export const deleteMenuItem = TryCatch(async(req:AuthenticatedRequest, res)=>{
     })
 })
 
-export const toggleMenuItemAvailability
+export const toggleMenuItemAvailability = TryCatch(async(req: AuthenticatedRequest, res)=>{
+    if(!req.user){
+        return res.status(401).json({
+            message: "Please login",
+        })
+    }
+
+    const {itemId} = req.params;
+    if(!itemId){
+        return res.status(400).json({
+            message: "id is required",
+        })
+    }
+
+    const item = await MenuItems.findById(itemId)
+
+    if(!item){
+        return res.status(404).json({
+            message: "No item found"
+        })
+    }
+
+    const restaurant = await Restaurant.findOne({
+        _id: item.restaurantId,
+        ownerId: req.user._id,
+    })
+
+    if(!restaurant){
+        return res.status(404).json({
+            message: "Restaurant not found",
+        })
+    }
+
+    item.isAvailable = !item.isAvailable
+    await item.save()
+
+    res.json({
+        message: `Item Marked as ${item.isAvailable ? "available" : "unavailable"}`,
+        item
+    })
+
+})
