@@ -44,9 +44,17 @@ export const addMenuItem = TryCatch(async(req: AuthenticatedRequest, res)=>{
         })
     }
 
-    const {data: uploadResult} = await axios.post(`${process.env.UTILS_SERVICE}/api/upload`, {
-        buffer: fileBuffer.content,
-    });
+    const {data: uploadResult} = await axios.post(
+        `${process.env.UTILS_SERVICE}/api/upload`,
+        {
+            buffer: fileBuffer.content,
+        },
+        {
+            timeout: 30000,
+            maxBodyLength: Infinity,
+            maxContentLength: Infinity,
+        }
+    );
 
     const item = await MenuItems.create({
         name, 
