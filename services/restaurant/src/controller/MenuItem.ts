@@ -1,5 +1,9 @@
+import axios from "axios";
+import getBuffer from "../config/datauri.js";
 import { AuthenticatedRequest } from "../middleware/isAuth.js";
 import TryCatch from "../middleware/trycatch.js";
+import Restaurant from "../models/Restaurant.js";
+import MenuItems from "../models/MenuItems.js";
 
 export const addMenuItem = TryCatch(async(req: AuthenticatedRequest, res)=>{
     if(!req.user){
@@ -8,5 +12,54 @@ export const addMenuItem = TryCatch(async(req: AuthenticatedRequest, res)=>{
         })
     }
 
-    const restaurant = await 
+    const restaurant = await Restaurant.findOne({ownerId: req.user._id})
+
+    if(!restaurant){
+        return res.status(404).json({
+            message: "Restaurant not found",
+        })
+    }
+
+    const {name, description, price} = req.body
+
+    if(!name || !price ){
+        return res.status(400).json({
+            message: "Name and Price are required",
+        })
+    }
+
+    const file = req.file;
+
+    if(!file){
+         return res.status(400).json({
+            message: "Please provide an image",
+        })
+    }
+
+    const fileBuffer = getBuffer(file);
+
+    if(!fileBuffer?.content){
+        return res.status(400).json({
+            message: "FAiled to create file buffer",
+        })
+    }
+
+    const {data: uploadResult} = await axios.post(`${process.env.UTILS_SERVICE}/api/upload`, {
+        buffer: fileBuffer.content,
+    });
+
+    const item = await MenuItems.create({
+        name, 
+        description,
+        price, 
+        restaurantId: restaurant._id,
+        image: uploadResult.url
+    })
+
+    res.json({
+        message: "Item added successfully",
+        item,
+    })
 })
+
+export const getAllItems = TryCatch
