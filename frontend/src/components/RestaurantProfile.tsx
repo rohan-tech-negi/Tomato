@@ -3,7 +3,7 @@ import type { IRestaurant } from "../types"
 import axios from "axios"
 import { restaurantService } from "../main"
 import toast from "react-hot-toast"
-import { BiEdit, BiMapPin } from "react-icons/bi"
+import { BiEdit, BiMapPin, BiSave } from "react-icons/bi"
 
 interface props{
     restaurant: IRestaurant
@@ -91,9 +91,29 @@ const RestaurantProfile = ({restaurant, isSeller, onUpdate}:props) => {
                         
                     </div>
                 ) : (
-                    <p className="text-gray-600">{restaurant.description}</p>
+                    <p className="text-sm text-gray-600">{restaurant.description || "No description available"}</p>
                 )
             }
+
+            <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+                <span className={`text-sm font-medium ${isOpen ? "text-green-600" : "text-red-600"}`}>
+                    {isOpen?"Open":"closed"}
+                </span>
+
+                <div className="flex gap-3">
+                    {editMode && (
+                        <button onClick={saveChanges} disabled={loading} className="flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700"><BiSave size={16}/> Save</button>
+                    )}
+
+                    {
+                        isSeller && <button onClick={toggleOpenStatus} className={`rounded--lg px-4 py-1.5 text-sm font-medium text-white ${isOpen ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"}`}>{isOpen ? "CLose Restaurant" : "Open restaurant"}</button>
+                    }
+                </div>
+            </div>
+
+            <p className="text-xs text-gray-400 mt-2">
+                Created on {new Date(restaurant.createdAt).toLocaleDateString()}
+            </p>
 
         </div>
     </div>
