@@ -5,11 +5,12 @@ import { useState
 
  } from 'react'
 import { restaurantService } from '../main'
-import { IMenuItems, type IRestaurant } from '../types'
+
 import AddRestaurant from '../components/AddRestaurant'
 import RestaurantProfile from '../components/RestaurantProfile'
 import AddMenuItem from '../components/AddMenuItem'
 import MenuItems from '../components/MenuItems'
+import type { IMenuItems } from '../types'
 
 type SellerTab = "menu" | "add-item" | "sales";
 const Restaurant = () => {
@@ -59,6 +60,12 @@ const Restaurant = () => {
         console.log(error)
       }
    }
+
+   useEffect(()=>{
+      if(restaurant?._id){
+        fetchMenuItems(restaurant._id)
+      }
+   },[restaurant])
 
    if(loading) return <div className='flex min-g-screen items-center justify-center'><p className='text-gray-500'>Loading your Restaurant....</p></div>
 
