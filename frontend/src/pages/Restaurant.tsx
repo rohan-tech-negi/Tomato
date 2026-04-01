@@ -43,6 +43,8 @@ const Restaurant = () => {
    useEffect(()=>{
     fetchRestaurant()
    },[])
+   
+   const[menuItems, setMenuItems] = useState([])
 
    if(loading) return <div className='flex min-g-screen items-center justify-center'><p className='text-gray-500'>Loading your Restaurant....</p></div>
 
