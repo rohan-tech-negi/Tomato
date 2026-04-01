@@ -1,8 +1,12 @@
 import { useState } from "react";
 import type { IMenuItems } from "../types"
-import { BsEye } from "react-icons/bs";
+import { BsCart, BsEye } from "react-icons/bs";
 import { FiEyeOff } from "react-icons/fi";
 import { BiTrash } from "react-icons/bi";
+import toast, { LoaderIcon } from "react-hot-toast";
+import { VscLoading } from "react-icons/vsc";
+import { restaurantService } from "../main";
+import axios from "axios";
 
 
 interface MenuItemProps{
@@ -13,6 +17,26 @@ interface MenuItemProps{
 
 const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
   const[loadingItemId, setLoadingItemId] = useState<string | null>(null)
+
+  const handleDelete = async(itemId:string)=>{
+    const confirm  = window.confirm("Are you sure you want to delete this item?")
+    if(!confirm) return;
+
+    try {
+      await axios.delete(`${restaurantService}/api/item${itemId}`,{
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      toast.success("Item deleted successfully")
+      onItemDeleted()
+    } catch (error) {
+      console.log(error)
+      toast.error("Failed to delete item")
+    } finally{
+      setLoadingItemId(null)
+    }
+  }
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {
@@ -56,6 +80,12 @@ const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
                       </div>
                       
                     )}
+
+                    {
+                      !isSeller && <button disabled={!item.isAvailable || isLoading} onClick={()=>{}} className={`flex items-center justify-center rounded-lg p-2 ${
+                        !item.isAvailable || isLoading ? "cursor-not-allowed text-gray-400" : "text-red-500 hover:bg-red-50"
+                      }`}>{isLoading ? <VscLoading size={18} className="animate-spin"></VscLoading> : <BsCart size={18}></BsCart>}</button>
+                    }
                 </div>
               </div>
 
