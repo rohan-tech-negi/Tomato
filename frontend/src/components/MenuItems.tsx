@@ -33,9 +33,7 @@ const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
     } catch (error) {
       console.log(error)
       toast.error("Failed to delete item")
-    } finally{
-      setLoadingItemId(null)
-    }
+    } 
   }
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -74,7 +72,7 @@ const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
                         {item.isAvailable ? <BsEye size={18}></BsEye> : <FiEyeOff size={18}></FiEyeOff>}
                       </button>
 
-                      <button onClick={(()=>{})} className="rounded-lg p-2 text-red-500 hover: bg-red-50 ">
+                      <button onClick={(()=>handleDelete(item._id))} className="rounded-lg p-2 text-red-500 hover: bg-red-50 ">
                         <BiTrash size={18}></BiTrash>
                       </button>
                       </div>
