@@ -1,8 +1,15 @@
+import type { IMenuItems } from "../types"
 
 
-const MenuItems = () => {
+interface MenuItemProps{
+  items: IMenuItems[];
+  onItemDeleted: ()=>void;
+  isSeller: boolean
+}
+
+const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
   return (
-    <div>
+    <div className="">
       
     </div>
   )
