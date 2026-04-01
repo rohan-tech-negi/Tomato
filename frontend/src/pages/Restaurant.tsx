@@ -45,6 +45,20 @@ const Restaurant = () => {
    },[])
    
    const[menuItems, setMenuItems] = useState<IMenuItems[]>([])
+   const fetchMenuItems = async(restaurantId: string)=>{
+      try {
+        const {data} = await axios.get(`${restaurantService}/api/item/all/${restaurantId}`, 
+          {
+            headers:{
+              Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+          }
+        )
+        setMenuItems(data)
+      } catch (error) {
+        console.log(error)
+      }
+   }
 
    if(loading) return <div className='flex min-g-screen items-center justify-center'><p className='text-gray-500'>Loading your Restaurant....</p></div>
 
