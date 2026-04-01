@@ -5,7 +5,7 @@ import { useState
 
  } from 'react'
 import { restaurantService } from '../main'
-import type { IRestaurant } from '../types'
+import { IMenuItems, type IRestaurant } from '../types'
 import AddRestaurant from '../components/AddRestaurant'
 import RestaurantProfile from '../components/RestaurantProfile'
 import AddMenuItem from '../components/AddMenuItem'
@@ -44,7 +44,7 @@ const Restaurant = () => {
     fetchRestaurant()
    },[])
    
-   const[menuItems, setMenuItems] = useState([])
+   const[menuItems, setMenuItems] = useState<IMenuItems[]>([])
 
    if(loading) return <div className='flex min-g-screen items-center justify-center'><p className='text-gray-500'>Loading your Restaurant....</p></div>
 
