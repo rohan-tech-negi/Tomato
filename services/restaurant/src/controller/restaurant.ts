@@ -161,7 +161,51 @@ export const updateRestaurant = TryCatch(async(req:AuthenticatedRequest, res)=>{
 
 
 export const getNearbyRestaurant = TryCatch(async(req, res)=>{
-    const {latitude, longitude} = req.query;
+    const {latitude, longitude, radius=5000, search=""} = req.query;
+
+    if(!latitude || !longitude){
+        return res.status(400).json({
+            message: "Latitude and longitude are required"
+        })
+    }
+
+    const query: any = {
+        isVarified: true,
+    }
+
+    if(search && typeof search === "string"){
+        query.name = {$regex: search, $option: "i"}
+    }
+
+    const restaurants = await Restaurant.aggregate([
+        {
+            $geoNear:{
+                near:{
+                    type:"point",
+                    coordinates:[Number(longitude), Number(latitude)]
+                },
+                distanceField: "distance",
+                maxDistance: Number(radius),
+                spherical: true,
+                query,
+            }
+        },
+        {
+            $sort:{
+                isOpen: -1,
+                distance:1,
+            }
+        },
+        {
+            $addFields:{
+                distanceKm:{
+                    $round:[{$divide:["$distance", 1000]}, 2]
+                }
+            }
+        }
+
+
+    ])
 })
 
 
