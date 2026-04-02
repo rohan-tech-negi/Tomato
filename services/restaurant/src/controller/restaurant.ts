@@ -160,5 +160,10 @@ export const updateRestaurant = TryCatch(async(req:AuthenticatedRequest, res)=>{
 })
 
 
+export const getNearbyRestaurant = TryCatch(async(req, res)=>{
+    const {latitude, longitude} = req.query;
+})
+
+
 
 
