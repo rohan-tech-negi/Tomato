@@ -39,6 +39,28 @@ const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
       }
     } 
   }
+
+
+  const ToggleAvailability = async(itemId:string)=>{
+    
+
+    try {
+      const {data} = await axios.put(`${restaurantService}/api/item/status/${itemId}`,{},{
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      toast.success(data.message)
+      onItemDeleted()
+        } catch (error) {
+      console.log(error)
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "Failed to delete item")
+      } else {
+        toast.error("Failed to update Status")
+      }
+    } 
+  }
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {
@@ -72,7 +94,7 @@ const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
                     </p>
                     {isSeller && (
                       <div>
-                        <button className="flex gap-4 rounded-md bg-red-500 px-3 py-1 text-white hover:bg-red-600" onClick={()=>{}} >
+                        <button className="flex gap-4 rounded-md bg-red-500 px-3 py-1 text-white hover:bg-red-600" onClick={()=>ToggleAvailability(item._id)}>
                         {item.isAvailable ? <BsEye size={18}></BsEye> : <FiEyeOff size={18}></FiEyeOff>}
                       </button>
 
