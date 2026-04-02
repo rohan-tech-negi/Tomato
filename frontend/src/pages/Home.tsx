@@ -2,34 +2,89 @@
 
 import { useSearchParams } from "react-router-dom"
 import { useAppData } from "../context/AppContext"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { IRestaurant } from "../types"
-// import { IRestaurant } from "../types"
+import { restaurantService } from "../main"
+import axios from "axios"
 
 const Home = () => {
-  const {location} = useAppData()
+  const { location } = useAppData()
 
-  const{searchParams} = useSearchParams()
-
+  const [searchParams] = useSearchParams()
   const search = searchParams.get("search") || ""
 
-  const[restaurants, setRestaurants] = useState<IRestaurant[]>([])
+  const [restaurants, setRestaurants] = useState<IRestaurant[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const[loading, setLoading] = useState(true);
+  // ✅ Fixed distance function
+  const getDistanceKm = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ): number => {
+    const R = 6371
 
-  const getDistanceKm = (lat1:number, lon1: number, lat2: number, lon2: number): number=>{
+    const dLat = ((lat2 - lat1) * Math.PI) / 180
+    const dLon = ((lon2 - lon1) * Math.PI) / 180
 
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2)
 
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2)*Math.PI / 180;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
-  return (
-    <div>Home</div>
-  )
+    return Number((R * c).toFixed(2))
+  }
+
+  // ✅ Moved outside (FIXED SCOPE ISSUE)
+  const fetchRestaurants = async () => {
+    if (!location?.latitude || !location?.longitude) {
+      alert("You need to give permission of your location to continue")
+      return
+    }
+
+    try {
+      setLoading(true)
+
+      const { data } = await axios.get(
+        `${restaurantService}/api/restaurant/all`,
+        {
+          params: {
+            latitude: location.latitude,
+            longitude: location.longitude,
+            search,
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+
+      setRestaurants(data.restaurants ?? [])
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchRestaurants()
+  }, [location, search])
+
+  if (loading || !location) {
+    return (
+      <div className="flex h-[60vh] items-center justify-center">
+        <p className="text-gray-500">Finding restaurants nearby....</p>
+      </div>
+    )
+  }
+
+  return <div>Home</div>
 }
 
 export default Home
