@@ -3,7 +3,8 @@
 import { useSearchParams } from "react-router-dom"
 import { useAppData } from "../context/AppContext"
 import { useState } from "react"
-import { IRestaurant } from "../types"
+import type { IRestaurant } from "../types"
+// import { IRestaurant } from "../types"
 
 const Home = () => {
   const {location} = useAppData()
@@ -17,7 +18,7 @@ const Home = () => {
   const[loading, setLoading] = useState(true);
 
 
-  
+
   return (
     <div>Home</div>
   )

@@ -1,0 +1,14 @@
+{
+  "name": "zomato-clone",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n auth,restaurant,utils,frontend -c blue,green,yellow,magenta \"npm run dev --prefix services/auth\" \"npm run dev --prefix services/restaurant\" \"npm run dev --prefix services/utils\" \"npm run dev --prefix frontend\"",
+    "dev:auth": "npm run dev --prefix services/auth",
+    "dev:restaurant": "npm run dev --prefix services/restaurant",
+    "dev:utils": "npm run dev --prefix services/utils",
+    "dev:frontend": "npm run dev --prefix frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

@@ -27,7 +27,7 @@ export interface AppContextType{
 
 }
 
-export interface IRestaurant {
+export interface IRestaurant{
     _id: string;
     name: string;
     description: string;

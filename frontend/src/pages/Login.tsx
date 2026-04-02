@@ -30,7 +30,11 @@ const Login = () => {
             navigate("/")
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong")
+            if (axios.isAxiosError(error) && !error.response) {
+                toast.error("Cannot reach auth server. Run it on port 5000 (e.g. npm run dev in services/auth or npm run dev from repo root).");
+            } else {
+                toast.error("Something went wrong");
+            }
             setLoading(false)
         }
     }

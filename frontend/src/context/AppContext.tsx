@@ -19,22 +19,28 @@ export const AppProvider = ({children} : AppProviderProps)=>{
     const[city, setCity] = useState("Fetiching Location....")
 
     async function fetchUser() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setLoading(false);
+            return;
+        }
         try {
-            const token = localStorage.getItem("token")
-
-            const {data} = await axios.get(`${authService}/api/auth/me`, {
+            const { data } = await axios.get(`${authService}/api/auth/me`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }, 
-
-                
+                    Authorization: `Bearer ${token}`,
+                },
             });
             setUser(data);
             setIsAuth(true);
         } catch (error) {
-            console.log(error)
-        }finally{
-            setLoading(false)
+            console.log(error);
+            if (axios.isAxiosError(error) && error.response?.status === 401) {
+                localStorage.removeItem("token");
+                setUser(null);
+                setIsAuth(false);
+            }
+        } finally {
+            setLoading(false);
         }
     }
 
