@@ -17,7 +17,7 @@ const Home = () => {
 
   const[loading, setLoading] = useState(true);
 
-
+  const getDistanceKm = (lat1:number, lon1: number)
 
   return (
     <div>Home</div>
