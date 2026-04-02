@@ -206,6 +206,18 @@ export const getNearbyRestaurant = TryCatch(async(req, res)=>{
 
 
     ])
+
+    res.json({
+        success: true,
+        count: restaurants.length,
+        restaurants,
+    })
+});
+
+
+export const fetchSingleRestaurant = TryCatch(async(req, res)=>{
+    const restaurant = await Restaurant.findById(req.params.id)
+    res.json((restaurant))
 })
 
 
