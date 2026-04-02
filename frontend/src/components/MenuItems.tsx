@@ -23,16 +23,20 @@ const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
     if(!confirm) return;
 
     try {
-      await axios.delete(`${restaurantService}/api/item${itemId}`,{
+      await axios.delete(`${restaurantService}/api/item/${itemId}`,{
         headers:{
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })
       toast.success("Item deleted successfully")
       onItemDeleted()
-    } catch (error) {
+        } catch (error) {
       console.log(error)
-      toast.error("Failed to delete item")
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "Failed to delete item")
+      } else {
+        toast.error("Failed to delete item")
+      }
     } 
   }
   return (
@@ -40,9 +44,9 @@ const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
         {
           items.map((item)=>{
             
-            const isLoading = loadingItemId === items._id;
+            const isLoading = loadingItemId === item._id;
 
-            return <div className={`relative flex gap-4 rounded-lg bg-white p-4 shadow-sm transition ${!item.isAvailable ? "opacity-50" : ""}`}>
+            return <div key={item._id} className={`relative flex gap-4 rounded-lg bg-white p-4 shadow-sm transition ${!item.isAvailable ? "opacity-50" : ""}`}>
               <div className="relative shrink-0">
                 <img src={item.image} alt={item.name} className={`h-24 w-24 rounded-lg object-cover ${!item.isAvailable? "grayscale brightness-75" : ""}`}/>
                 {
@@ -72,7 +76,7 @@ const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
                         {item.isAvailable ? <BsEye size={18}></BsEye> : <FiEyeOff size={18}></FiEyeOff>}
                       </button>
 
-                      <button onClick={(()=>handleDelete(item._id))} className="rounded-lg p-2 text-red-500 hover: bg-red-50 ">
+                      <button onClick={() => handleDelete(item._id)} className="rounded-lg p-2 text-red-500 hover:bg-red-50">
                         <BiTrash size={18}></BiTrash>
                       </button>
                       </div>
