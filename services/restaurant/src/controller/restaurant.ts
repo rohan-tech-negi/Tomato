@@ -170,18 +170,18 @@ export const getNearbyRestaurant = TryCatch(async(req, res)=>{
     }
 
     const query: any = {
-        isVarified: true,
+        isVerified: true,
     }
 
     if(search && typeof search === "string"){
-        query.name = {$regex: search, $option: "i"}
+        query.name = {$regex: search, $options: "i"}
     }
 
     const restaurants = await Restaurant.aggregate([
         {
             $geoNear:{
                 near:{
-                    type:"point",
+                    type:"Point",
                     coordinates:[Number(longitude), Number(latitude)]
                 },
                 distanceField: "distance",
