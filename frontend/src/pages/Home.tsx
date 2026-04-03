@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import type { IRestaurant } from "../types"
 import { restaurantService } from "../main"
 import axios from "axios"
+import RestaurantCard from "../components/RestaurantCard"
 
 const Home = () => {
   const { location } = useAppData()
@@ -43,7 +44,7 @@ const Home = () => {
   // ✅ Moved outside (FIXED SCOPE ISSUE)
   const fetchRestaurants = async () => {
     if (!location?.latitude || !location?.longitude) {
-      alert("You need to give permission of your location to continue")
+      
       return
     }
 
@@ -90,12 +91,14 @@ const Home = () => {
         restaurants.map((res)=>{
           const [resLng, resLat] = res.autoLocation.coordinates;
 
-          const distancec = getDistanceKm(
+          const distance = getDistanceKm(
             location.latitude,
             location.longitude,
             resLat,
             resLng
-          )
+          );
+
+          return <RestaurantCard key={res._id} id={res._id} name={res.name} image={res.image ?? ""} distance={`${distance}`} isOpen={res.isOpen}></RestaurantCard>
         })
       }
     </div> : <p className="text-center text-gray-500">No restaurants found</p>}
