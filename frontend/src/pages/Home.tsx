@@ -84,7 +84,7 @@ const Home = () => {
     )
   }
 
-  return <div>Home</div>
+  return <div className="mx-auto">Home</div>
 }
 
 export default Home
