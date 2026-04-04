@@ -12,6 +12,7 @@ import Navbar from './components/navbar'
 import { Account } from './pages/Account'
 import { useAppData } from './context/AppContext'
 import  Restaurant from './pages/Restaurant'
+import RestaurantPage from './pages/RestaurantPage'
 const App = () => {
 
   const {user} = useAppData()
@@ -34,6 +35,7 @@ const App = () => {
 
         <Route element={<ProtectedRoute></ProtectedRoute>}>
          <Route path="/" element={<Home />} />
+         <Route path='/restaurant/:id' element={<RestaurantPage></RestaurantPage>}></Route>
          <Route path='/select-role' element={<SelectRole></SelectRole>}></Route>
          <Route path='/account' element={<Account></Account>}></Route>
         </Route>
