@@ -9,9 +9,10 @@ interface props{
     restaurant: IRestaurant
     isSeller:boolean
     onUpdate:(restaurant:IRestaurant)=>void
+    children?: React.ReactNode
 }
 
-const RestaurantProfile = ({restaurant, isSeller, onUpdate}:props) => {
+const RestaurantProfile = ({restaurant, isSeller, onUpdate, children}:props) => {
     const[editMode, setEditMode] = useState(false)
     const[name, setName] = useState(restaurant.name)
     const[description, setDescription] = useState(restaurant.description)
@@ -137,6 +138,7 @@ const RestaurantProfile = ({restaurant, isSeller, onUpdate}:props) => {
             </p>
 
         </div>
+        {children}
     </div>
   )
 }
