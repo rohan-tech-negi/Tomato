@@ -16,7 +16,7 @@ const RestaurantPage = () => {
 
   const fetchRestaurant = async()=>{
     try {
-      const {data} = await axios.get(`${restaurantService}/api/restaurants/${id}`, {
+      const {data} = await axios.get(`${restaurantService}/api/restaurant/${id}`, {
         headers:{
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
@@ -53,6 +53,10 @@ const RestaurantPage = () => {
 
    if(loading){
     return <div className='flex min-h-screen items-center justify-center'><p className='text-gray-500'>Loading Restaurant...</p></div>
+   }
+
+   if(!restaurant){
+    return <div className='flex min-h-screen items-center justify-center'><p className='text-gray-500'>Restaurant Not Found</p></div>
    }
 
    
