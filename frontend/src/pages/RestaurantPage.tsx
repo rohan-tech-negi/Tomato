@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { IMenuItems, IRestaurant } from "../types"
+import {  type IMenuItems, type IRestaurant} from "../types"
 import axios from "axios"
 import { restaurantService } from "../main"
+import RestaurantProfile from "../components/RestaurantProfile"
 
 const RestaurantPage = () => {
   const{id} = useParams()
@@ -48,9 +49,15 @@ const RestaurantPage = () => {
       fetchRestaurant()
       fetchMenuItems()
     }
-   })
+   },[id])
+
+   if(loading){
+    return <div className='flex min-h-screen items-center justify-center'><p className='text-gray-500'>Loading Restaurant...</p></div>
+   }
+
+   
   return (
-    <div>RestaurantPage</div>
+    <div className="min-h-screen bg-gray-50 px-4 py-6 space-y-6"><RestaurantProfile restaurant={restaurant} onUpdate={setRestaurant} isSeller={false}></RestaurantProfile></div>
   )
 }
 
