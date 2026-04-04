@@ -87,6 +87,25 @@ const RestaurantProfile = ({restaurant, isSeller, onUpdate}:props) => {
             }
 
             {
+                !isSeller && <div className="flex items-start justify-between">
+                    <div>
+                        {
+                            editMode ? (
+                                <input value={name} onChange={e => setName(e.target.value)} className="w-full text-2xl font-bold border rounded px-2 py-1" />
+                            ) : (
+                                <h1 className="text-xl font-semibold">{restaurant.name}</h1>
+                            )
+                        }
+                        <div className="mt-1 flex items-center gap-2 text-sm text-gray-500">
+                            <BiMapPin className="h-4 w-4 text-red-500"/>
+                            {restaurant.autoLocation?.formattedAddress || "Location unavailable"}
+                        </div>
+                    </div>
+                   
+                </div>
+            }
+
+            {
                 editMode ? (
                     <div className="space-y-4">
                         <textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full border rounded px-2 py-1 text-sm" />
