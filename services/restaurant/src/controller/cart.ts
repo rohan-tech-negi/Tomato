@@ -60,4 +60,24 @@ export const fetchMyCart = TryCatch(async(req: AuthenticatedRequest, res)=>{
     }
 
     const userId = req.user._id;
+
+    const cartItems = await Cart.find({userId}).populate("itemId").populate("restaurantId")
+
+    let subtotal = 0
+    let cartLength = 0;
+
+    for(const cartItem of cartItems){
+        const item:any = cartItem.itemId;
+
+        subtotal += item.price * cartItem.quantity;
+        cartLength += cartItem.quantity;
+    }
+
+    return res.json({
+        success: true,
+        cartLength,
+        subtotal,
+        cart: cartItems,
+
+    })
 })
