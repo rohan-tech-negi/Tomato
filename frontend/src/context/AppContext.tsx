@@ -44,6 +44,8 @@ export const AppProvider = ({children} : AppProviderProps)=>{
         }
     }
 
+    
+
     useEffect(()=>{
         fetchUser()
     }, [])

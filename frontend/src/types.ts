@@ -56,3 +56,12 @@ export interface IMenuItems {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface Icart {
+    userId: string
+    restaurantId:string | IRestaurant
+    itemId: string | IMenuItems
+    quantity: number;
+    createdAt: Date;
+    updatedAt: Date
+}
