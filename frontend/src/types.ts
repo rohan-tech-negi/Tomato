@@ -57,7 +57,7 @@ export interface IMenuItems {
     updatedAt: Date;
 }
 
-export interface Icart {
+export interface ICart{
     userId: string
     restaurantId:string | IRestaurant
     itemId: string | IMenuItems

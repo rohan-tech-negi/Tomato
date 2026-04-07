@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { authService, restaurantService } from "../main";
-import { Icart, type AppContextType, type LocationData, type User } from "../types";
+import {  type AppContextType, type ICart, type LocationData, type User } from "../types";
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -44,8 +44,8 @@ export const AppProvider = ({children} : AppProviderProps)=>{
         }
     }
 
-    const[cart, setCart] = useState<Icart[]>([])
-    const[subTotal, setSubTotal] = useState(0)
+    const[cart, setCart] = useState<ICart[]>([])
+    const[subtotal, setSubTotal] = useState(0)
     const[quantity, setQuantity] = useState(0)
 
     async function fetchCart() {
@@ -56,6 +56,9 @@ export const AppProvider = ({children} : AppProviderProps)=>{
                     Authorization: `Bearer ${localStorage.getItem("token")}`
                 }
             })
+            setCart(data.cart || [])
+            setSubTotal(data.subtotal || 0)
+            setQuantity(data. cartLength)
         } catch (error) {
             console.log(error)
         }
