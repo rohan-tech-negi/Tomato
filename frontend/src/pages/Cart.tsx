@@ -6,6 +6,7 @@ import { useState } from "react"
 import type { IRestaurant } from "../types"
 import axios from "axios"
 import { restaurantService } from "../main"
+import toast from "react-hot-toast"
 
 const Cart = () => {
   const{cart, subtotal, Quantity, fetchCart} = useAppData()
@@ -39,7 +40,25 @@ const Cart = () => {
       })
       await fetchCart()
     } catch (error) {
-      
+      toast.error("Something went wrong")
+    } finally{
+      setLoadingItemId(null)
+    }
+  }
+
+  const decreaseQty = async(itemId: string)=>{
+    try {
+      setLoadingItemId(itemId)
+      await axios.post(`${restaurantService}/api/cart/dec`, {itemId}, {
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      await fetchCart()
+    } catch (error) {
+      toast.error("Something went wrong")
+    } finally{
+      setLoadingItemId(null)
     }
   }
   return (
