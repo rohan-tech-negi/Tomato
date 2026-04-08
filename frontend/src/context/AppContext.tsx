@@ -46,7 +46,7 @@ export const AppProvider = ({children} : AppProviderProps)=>{
 
     const[cart, setCart] = useState<ICart[]>([])
     const[subtotal, setSubTotal] = useState(0)
-    const[quantity, setQuantity] = useState(0)
+    const[Quantity, setQuantity] = useState(0)
 
     async function fetchCart() {
         if(!user || user.role !== "customer") return;
@@ -101,7 +101,7 @@ export const AppProvider = ({children} : AppProviderProps)=>{
         })
     },[])
 
-    return <AppContext.Provider value={{isAuth, loading, setIsAuth, setLoading, setUser, user, location, loadingLocation, city}}>{children}</AppContext.Provider>
+    return <AppContext.Provider value={{isAuth, loading, setIsAuth, setLoading, setUser, user, location, loadingLocation, city, cart, fetchCart, subtotal, Quantity}}>{children}</AppContext.Provider>
 
 }
 
