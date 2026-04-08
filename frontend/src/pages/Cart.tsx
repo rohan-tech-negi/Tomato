@@ -61,6 +61,22 @@ const Cart = () => {
       setLoadingItemId(null)
     }
   }
+
+  const clearCart = async()=>{
+    try {
+      setClearingCart(true)
+      await axios.delete(`${restaurantService}/api/cart/clear`, {
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      await fetchCart()
+    } catch (error) {
+      toast.error("Something went wrong")
+    } finally{
+      setLoadingItemId(null)
+    }
+  }
   return (
     <div>Cart</div>
   )
