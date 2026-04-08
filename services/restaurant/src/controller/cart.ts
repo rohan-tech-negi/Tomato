@@ -161,3 +161,16 @@ export const decrementCartItem = TryCatch(async(req:AuthenticatedRequest, res)=>
 })
 
 
+export const clearCart = TryCatch(async(req: AuthenticatedRequest, res)=>{
+    const userId = req.user?._id;
+    if(!userId){
+        return res.status(401).json({
+            message: "Unauthorized"
+        })
+    }
+
+    await Cart.deleteMany({userId});
+    return res.json({
+        message: "Cart cleared successfully"
+    })
+})
