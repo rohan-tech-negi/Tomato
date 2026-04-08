@@ -69,6 +69,12 @@ export const AppProvider = ({children} : AppProviderProps)=>{
     }, [])
 
     useEffect(()=>{
+        if(user && user.role === "customer"){
+            fetchCart()
+        }
+    },[user])
+
+    useEffect(()=>{
         if(!navigator.geolocation) return alert("Please allow location to continue");
         setLoadingLocation(true)
         navigator.geolocation.getCurrentPosition(async (position)=>{
