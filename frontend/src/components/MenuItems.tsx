@@ -7,6 +7,7 @@ import toast, { LoaderIcon } from "react-hot-toast";
 import { VscLoading } from "react-icons/vsc";
 import { restaurantService } from "../main";
 import axios from "axios";
+import { useAppData } from "../context/AppContext";
 
 
 interface MenuItemProps{
@@ -60,6 +61,34 @@ const MenuItems = ({items, onItemDeleted, isSeller}: MenuItemProps) => {
         toast.error("Failed to update Status")
       }
     } 
+  }
+
+
+  const {fetchCart} = useAppData()
+
+  const addToCart = async(restaurantId: string, itemId: string)=>{
+    try {
+      setLoadingItemId(itemId)
+      const {data} = await axios.post(`${restaurantService}/api/cart/add`, {
+        restaurantId, 
+        itemId
+      }, {
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      toast.success(data.message)
+      fetchCart()
+    } catch (error) {
+      console.log(error)
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "Failed to add to cart")
+      } else {
+        toast.error("Failed to add to cart")
+      }
+    } finally {
+      setLoadingItemId(null)
+    }
   }
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
