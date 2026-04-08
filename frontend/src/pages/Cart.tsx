@@ -63,6 +63,8 @@ const Cart = () => {
   }
 
   const clearCart = async()=>{
+    const confirm = window.confirm("Are you sure you want to clear your cart?")
+    if(!confirm) return;
     try {
       setClearingCart(true)
       await axios.delete(`${restaurantService}/api/cart/clear`, {
