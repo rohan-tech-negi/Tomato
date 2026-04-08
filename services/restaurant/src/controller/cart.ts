@@ -106,4 +106,58 @@ export const incrementCartItem = TryCatch(async(req:AuthenticatedRequest, res)=>
             new: true
         }
     )
+
+    if(!cartItem){
+        return res.status(404).json({
+            message: "Item not found"
+        })
+
+    }
+    res.json({
+        message: "Quantity increased",
+        cartItem,
+    })
 })
+
+
+
+
+export const decrementCartItem = TryCatch(async(req:AuthenticatedRequest, res)=>{
+    const userId = req.user?._id
+
+    const {itemId} = req.body;
+
+    if(!userId || !itemId){
+        return res.status(400).json({
+            message: "Invalid request"
+        })
+    }
+
+    const cartItem = await Cart.findOne(
+        {userId, itemId}, 
+        
+    )
+
+    if(!cartItem){
+        return res.status(404).json({
+            message: "Item not found"
+        })
+
+    }
+
+    if(cartItem.quantity === 1){
+        await Cart.deleteOne({userId, itemId})
+        return res.json({
+            message: "Item removed from cart"
+        })
+    }
+
+    cartItem.quantity -= 1;
+    await cartItem.save();
+    res.json({
+        message: "Quantity decreased",
+        cartItem,
+    })
+})
+
+
