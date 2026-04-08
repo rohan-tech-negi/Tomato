@@ -81,3 +81,29 @@ export const fetchMyCart = TryCatch(async(req: AuthenticatedRequest, res)=>{
 
     })
 })
+
+
+
+
+
+export const incrementCartItem = TryCatch(async(req:AuthenticatedRequest, res)=>{
+    const userId = req.user?._id
+
+    const {itemId} = req.body;
+
+    if(!userId || !itemId){
+        return res.status(400).json({
+            message: "Invalid request"
+        })
+    }
+
+    const cartItem = await Cart.findOneAndUpdate(
+        {userId, itemId}, 
+        {
+            $inc: {quantity: 1}
+        },
+        {
+            new: true
+        }
+    )
+})
