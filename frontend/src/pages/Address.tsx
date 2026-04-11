@@ -5,6 +5,7 @@ Marker,
 useMapEvents,
 useMap,
 } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -70,7 +71,7 @@ onLocate(latitude, longitude);
 return (
 <button
 onClick={locateUser}
-className="absolute right-3 top-3 z-1000 flex items-center gap-2
+className="absolute right-3 top-3 z-[1000] flex items-center gap-2
 rounded-lg bg-white px-3 py-2 text-sm shadow hover:bg-gray-100"
 >
 <LuLocateFixed size={16} />
@@ -98,8 +99,7 @@ const [longitude, setLongitude] = useState<number | null>(null);
 const fetchFormattedAddress = async (lat: number, lng: number) => {
 try {
 const res = await fetch(
-`https://nominatim.openstreetmap.org/reverse?format=json&lat=$
-{lat}&lon=${lng}`
+`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
 );
 const data = await res.json();
 setFormattedAddress(data.display_name || "");
@@ -121,7 +121,7 @@ headers: {
 Authorization: `Bearer ${localStorage.getItem("token")}`,
 },
 });
-setAddresses(data || []);
+setAddresses(data.addresses || []);
 } catch {
 toast.error("Failed to load addresses");
 
@@ -258,8 +258,7 @@ border bg-white p-3"
 >
 <div>
 
-<p className="text-sm font-
-medium">{addr.formattedAddress}</p>
+<p className="text-sm font-medium">{addr.formattedAddress}</p>
 
 <p className="text-xs text-gray-500">📞
 {addr.mobile}</p>

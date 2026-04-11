@@ -14,7 +14,6 @@ import { useAppData } from './context/AppContext'
 import  Restaurant from './pages/Restaurant'
 import RestaurantPage from './pages/RestaurantPage'
 import Cart from './pages/Cart'
-import Address from './pages/Address'
 import AddAddressPage from './pages/Address'
 const App = () => {
 
