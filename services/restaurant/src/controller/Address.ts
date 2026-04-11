@@ -70,3 +70,22 @@ export const deleteAddress = TryCatch(async(req:AuthenticatedRequest, res)=>{
         message: "Address deleted successfully"
     })
 })
+
+
+export const getMyAddress = TryCatch(async(req:AuthenticatedRequest, res)=>{
+    const user = req.user
+    if(!user){
+        return res.status(401).json({
+            message: "Unauthorized"
+        })
+    }
+
+    const addresses = await Address.find({
+        userId: user._id.toString()
+    })
+
+    return res.status(200).json({
+        message: "Addresses fetched successfully",
+        addresses
+    })
+})
