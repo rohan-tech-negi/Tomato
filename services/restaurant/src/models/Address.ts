@@ -6,7 +6,7 @@ export interface IAddress extends Document {
     userId : string;
     mobile: number;
     
-    formatterAddress : string;
+    formattedAddress : string;
 
     location: {
         type: "Point",
@@ -26,7 +26,7 @@ const addressSchema = new Schema({
         type: Number,
         required: true
     },
-    formatterAddress:{
+    formattedAddress:{
         type: String,
         required: true
     },

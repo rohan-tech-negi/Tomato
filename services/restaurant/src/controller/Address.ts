@@ -11,9 +11,9 @@ export const addAddress = TryCatch(async(req:AuthenticatedRequest, res)=>{
         })
     }
 
-    const {mobile, formatterAddress, latitude, longitude} = req.body;
+    const {mobile, formattedAddress, latitude, longitude} = req.body;
 
-    if(!mobile || !formatterAddress || latitude===undefined || longitude===undefined){
+    if(!mobile || !formattedAddress || latitude===undefined || longitude===undefined){
         return res.status(400).json({
             message: "All fields are required"
         })
@@ -22,7 +22,7 @@ export const addAddress = TryCatch(async(req:AuthenticatedRequest, res)=>{
     const newAddress = await Address.create({
         userId: user._id.toString(),
         mobile,
-        formatterAddress,
+        formattedAddress,
         location: {
             type: "Point",
             coordinates: [Number(longitude), Number(latitude)]
