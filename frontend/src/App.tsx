@@ -15,6 +15,7 @@ import  Restaurant from './pages/Restaurant'
 import RestaurantPage from './pages/RestaurantPage'
 import Cart from './pages/Cart'
 import Address from './pages/Address'
+import AddAddressPage from './pages/Address'
 const App = () => {
 
   const {user} = useAppData()
@@ -37,7 +38,7 @@ const App = () => {
 
         <Route element={<ProtectedRoute></ProtectedRoute>}>
          <Route path="/" element={<Home />} />
-         <Route path="/address" element={<Address></Address>} />
+         <Route path="/address" element={<AddAddressPage></AddAddressPage>} />
          <Route path='/restaurant/:id' element={<RestaurantPage></RestaurantPage>}></Route>
          <Route path='/cart' element={<Cart></Cart>}></Route>
          <Route path='/select-role' element={<SelectRole></SelectRole>}></Route>
