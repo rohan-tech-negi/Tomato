@@ -166,6 +166,16 @@ const Cart = () => {
 
         {subtotal < 250 && <p className="text-xs text-gray-500">Add Item worth {250-subtotal} more to get free delivery</p>}
 
+
+        <div className="flex justify-between text-base font-semibold border-t pt-2">
+          <span>Grand Total</span>
+          <span>₹{grandTotal}</span>
+        </div>
+
+        <button onClick={checkout} className="mt-3 w-full rounded-lg bg-[#E23774] py-3 text-sm font-semibold text-white hover:bg-red-800">
+          Proceed to checkout
+        </button>
+
       </div>
 
 
