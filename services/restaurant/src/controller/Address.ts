@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { AuthenticatedRequest } from "../middleware/isAuth.js";
 import TryCatch from "../middleware/trycatch.js";
 import Address from "../models/Address.js";
@@ -50,4 +51,8 @@ export const deleteAddress = TryCatch(async(req:AuthenticatedRequest, res)=>{
             message: "id is required"
         })
     }
+
+    const address = await Address.findOne({
+    _id: new mongoose.Types.ObjectId(id)
+    })
 })
