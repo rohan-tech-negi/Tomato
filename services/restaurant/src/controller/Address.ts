@@ -53,6 +53,20 @@ export const deleteAddress = TryCatch(async(req:AuthenticatedRequest, res)=>{
     }
 
     const address = await Address.findOne({
-    _id: new mongoose.Types.ObjectId(id)
+    _id: id,
+    userId: user._id.toString(),
+
+    })
+
+    if(!address){
+        return res.status(404).json({
+            message: "Address not found"
+        })
+    }
+
+    await address.deleteOne()
+
+    return res.status(200).json({
+        message: "Address deleted successfully"
     })
 })
