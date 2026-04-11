@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import itemRoutes from "./routes/menuItem.js"
 import cartRoutes from "./routes/cart.js"
+import addressRoutes from "./routes/Address.js"
 dotenv.config();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.json())
 app.use("/api/restaurant", restaurantRoutes)
 app.use("/api/item", itemRoutes)
 app.use("/api/cart", cartRoutes)
+app.use("/api/address", addressRoutes)
 
 app.listen(PORT, () => {
     console.log(`Restaurent Server is running on port ${PORT}`);
