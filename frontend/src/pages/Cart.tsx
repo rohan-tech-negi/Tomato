@@ -76,7 +76,7 @@ const Cart = () => {
     } catch (error) {
       toast.error("Something went wrong")
     } finally{
-      setLoadingItemId(null)
+      setClearingCart(false)
     }
   }
   return (
