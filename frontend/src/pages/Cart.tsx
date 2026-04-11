@@ -7,6 +7,9 @@ import type { ICart, IMenuItems, IRestaurant } from "../types"
 import axios from "axios"
 import { restaurantService } from "../main"
 import toast from "react-hot-toast"
+import type { VscLoading } from "react-icons/vsc"
+import { BiMinus, BiPlus } from "react-icons/bi"
+import { FaTruckLoading } from "react-icons/fa"
 
 const Cart = () => {
   const{cart, subtotal, Quantity, fetchCart} = useAppData()
@@ -101,6 +104,22 @@ const Cart = () => {
 
   return <div key={item._id} className="flex items-center gap-4 rounded-xl bg-white p-4 shadow-sm ">
     <img src={item.image} alt="" className="h-20 w-20 rounded object-cover"/>
+    <div className="flex-1 space-y-2">
+      <h3 className="font-semibold">{item.name}</h3>
+      <p className="text-sm text-gray-500">{item.price}</p>
+      <div className="flex items-center gap-2">
+        <button className="hover:bg-gray-200 p-2 rounded-full border disabled:opacity-15" onClick={()=>decreaseQty(item._id)}>
+          {isLoading ? <FaTruckLoading size={16} className="animate-spin" ></FaTruckLoading>: <BiMinus></BiMinus > }
+        </button>
+
+
+        <span>{cartItem.quantity}</span>
+
+        <button className="hover:bg-gray-200 p-2 rounded-full border disabled:opacity-15" onClick={()=>increaseQty(item._id)}>
+          {isLoading ? <FaTruckLoading size={16} className="animate-spin" ></FaTruckLoading>: <BiPlus></BiPlus > }
+        </button>
+      </div>
+    </div>
 
   </div>
 })}
