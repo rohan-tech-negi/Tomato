@@ -82,7 +82,7 @@ export const getMyAddress = TryCatch(async(req:AuthenticatedRequest, res)=>{
 
     const addresses = await Address.find({
         userId: user._id.toString()
-    })
+    }).sort({createdAt: -1})
 
     return res.status(200).json({
         message: "Addresses fetched successfully",
