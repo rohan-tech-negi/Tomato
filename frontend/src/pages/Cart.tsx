@@ -36,7 +36,7 @@ const Cart = () => {
   const increaseQty = async(itemId: string)=>{
     try {
       setLoadingItemId(itemId)
-      await axios.post(`${restaurantService}/api/cart/inc`, {itemId}, {
+      await axios.put(`${restaurantService}/api/cart/inc`, {itemId}, {
         headers:{
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
@@ -52,7 +52,7 @@ const Cart = () => {
   const decreaseQty = async(itemId: string)=>{
     try {
       setLoadingItemId(itemId)
-      await axios.post(`${restaurantService}/api/cart/dec`, {itemId}, {
+      await axios.put(`${restaurantService}/api/cart/dec`, {itemId}, {
         headers:{
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
