@@ -10,6 +10,7 @@ import toast from "react-hot-toast"
 import type { VscLoading } from "react-icons/vsc"
 import { BiMinus, BiPlus } from "react-icons/bi"
 import { FaTruckLoading } from "react-icons/fa"
+import { TbTrash } from "react-icons/tb"
 
 const Cart = () => {
   const{cart, subtotal, Quantity, fetchCart} = useAppData()
@@ -172,8 +173,13 @@ const Cart = () => {
           <span>₹{grandTotal}</span>
         </div>
 
-        <button onClick={checkout} className="mt-3 w-full rounded-lg bg-[#E23774] py-3 text-sm font-semibold text-white hover:bg-red-800">
-          Proceed to checkout
+        <button onClick={checkout} className={`mt-3 w-full rounded-lg  py-3 text-sm font-semibold text-white hover:bg-red-800 ${!restaurant.isOpen? "opacity-50" : ""}`}disabled={!restaurant.isOpen}>
+          {!restaurant.isOpen ? "Restaurant is closed Please checkout after sometime" : "Proceed to checkout"}
+        </button>
+
+
+        <button onClick={clearCart} className="mt-3 w-full rounded-lg bg-[#E23774] py-3 text-sm font-semibold text-black hover:bg-gray-500" disabled={clearingCart} >
+          Clear Cart <TbTrash size={16}></TbTrash>
         </button>
 
       </div>
