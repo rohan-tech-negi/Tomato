@@ -119,11 +119,57 @@ const Cart = () => {
           {isLoading ? <FaTruckLoading size={16} className="animate-spin" ></FaTruckLoading>: <BiPlus></BiPlus > }
         </button>
       </div>
+
+      <p className="w-20 text-right font-medium">
+        ₹{item.price * cartItem.quantity}
+      </p>
     </div>
 
   </div>
 })}
       </div>
+      <div className="rounded-xl bg-white p-4 shadow-sm space-y-3 ">
+        <div className="flex justify-between text-sm">
+          <span>
+            Total item
+          </span>
+          <span>
+            {Quantity}
+          </span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span>
+            Subtotal
+          </span>
+          <span>
+            {subtotal}
+          </span>
+        </div>
+
+        <div className="flex justify-between text-sm">
+          <span>
+            Delivery Fee
+          </span>
+          <span>
+            {deliveryFee === 0 ? "Free" : `${deliveryFee}` }
+          </span>
+        </div>
+
+        <div className="flex justify-between text-sm">
+          <span>
+            Platform Fee
+          </span>
+          <span>
+            {platformFee}
+          </span>
+        </div>
+
+        {subtotal < 250 && <p className="text-xs text-gray-500">Add Item worth {250-subtotal} more to get free delivery</p>}
+
+      </div>
+
+
+
     </div>
   )
 }
