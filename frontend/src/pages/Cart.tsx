@@ -3,7 +3,7 @@
 import { useNavigate } from "react-router-dom"
 import { useAppData } from "../context/AppContext"
 import { useState } from "react"
-import type { IRestaurant } from "../types"
+import type { ICart, IMenuItems, IRestaurant } from "../types"
 import axios from "axios"
 import { restaurantService } from "../main"
 import toast from "react-hot-toast"
@@ -85,6 +85,26 @@ const Cart = () => {
   }
   return (
     <div className="mx-auto max-w-5xl px-4 py-6 space-y-6">
+      <div className="rounded-xl bg-white p-4 shadow-sm">
+        <h2 className="text-xl font-semibold">
+          {restaurant.name}
+        </h2>
+        <p className="text-sm text-gray-500">
+          {restaurant.autoLocation.formattedAddress}
+        </p>
+      </div>
+
+      <div className="space-y-4 ">
+{cart.map((cartItem:ICart)=>{
+  const item = cartItem.itemId as IMenuItems;
+  const isLoading = loadingItemId === item._id;
+
+  return <div key={item._id} className="flex items-center gap-4 rounded-xl bg-white p-4 shadow-sm ">
+    <img src={item.image} alt="" className="h-20 w-20 rounded object-cover"/>
+
+  </div>
+})}
+      </div>
     </div>
   )
 }
