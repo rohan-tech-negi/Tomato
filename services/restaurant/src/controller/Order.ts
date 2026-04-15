@@ -78,12 +78,19 @@ export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
         subtotal += itemTotal;
 
         return {
-            itemId: item._id,
+            itemId: item._id.toString(),
             name: item.name,
             price: item.price,
             quantity: cart.quantity
         }
     })
+
+    const deliveryFee = subtotal < 250 ? 40 : 0;
+    const platformFee = 7;
+
+    const totalAmount = subtotal + deliveryFee = platformFee
+
+    
 
     
 })
