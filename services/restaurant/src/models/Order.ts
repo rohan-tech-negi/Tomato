@@ -50,12 +50,12 @@ const OrderSchema = new Schema<IOrder>({
     userId:{
         type: String,
         required: true,
-        index: true
+        
     },
     restaurantId:{
         type: String,
         required: true,
-        index: true
+        
     },
     restaurantName:{
         type: String,
@@ -64,7 +64,7 @@ const OrderSchema = new Schema<IOrder>({
     riderId:{
         type: String,
         default: null,
-        index: true
+        
     },
     riderPhone:{
         type: Number,
@@ -82,33 +82,49 @@ const OrderSchema = new Schema<IOrder>({
         type: Number,
         required: true
     },
-    items:{
-        type: Array,
-        required: true
-    },
+    items:[{
+        itemId: String,
+        name: String,
+        price: Number,
+        quantity: Number
+    }],
     subtotal:{
         type: Number,
         required: true
     },
     deliveryFee:{
         type: Number,
-        required: true
+        
     },
     platformFee:{
         type: Number,
-        required: true
+        
     },
     totalAmount:{
         type: Number,
-        required: true
+        
     },
     addressId:{
         type: String,
         required: true
     },
     deliveryAddress:{
-        type: Object,
-        required: true
+        formattedAddress:{
+            type: String,
+            required: true
+        },
+        mobile:{
+            type: Number,
+            required: true
+        },
+        latitude:{
+            type: Number,
+            required: true
+        },
+        longitude:{
+            type: Number,
+            required: true
+        }
     },
     status:{
         type: String,
