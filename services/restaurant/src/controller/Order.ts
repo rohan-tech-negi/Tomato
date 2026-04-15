@@ -131,10 +131,19 @@ export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
 
     return res.status(201).json({
         message: "Order created successfully",
-        order
+        orderId: order._id.toString(),
+        amount: totalAmount
     })
 
 
 
     
+})
+
+export const fetchOrderForPayment = TryCatch(async(req: AuthenticatedRequest, res)=>{
+    if(req.headers["x-internal-key"] !== process.env.INTERNAL_SERVICE_KEY){
+        return res.status(403).json({
+            message: "Forbidden"
+        })
+    }
 })
