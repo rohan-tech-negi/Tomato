@@ -88,9 +88,16 @@ export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
     const deliveryFee = subtotal < 250 ? 40 : 0;
     const platformFee = 7;
 
-    const totalAmount = subtotal + deliveryFee = platformFee
+    const totalAmount = subtotal + deliveryFee + platformFee;
 
-    
+    const expiresAt = new Date(Date.now() + 15 * 60 *1000)
+
+    const [longitude, latitude] = address.location.coordinates;
+
+
+    const order = await 
+
+
 
     
 })
