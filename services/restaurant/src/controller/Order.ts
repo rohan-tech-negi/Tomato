@@ -3,7 +3,7 @@ import TryCatch from "../middleware/trycatch.js";
 import Address from "../models/Address.js";
 import Cart from "../models/Cart.js";
 import { IMenuItems } from "../models/MenuItems.js";
-import { Irestaurant } from "../models/Restaurant.js";
+import Restaurant, { Irestaurant } from "../models/Restaurant.js";
 
 export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
     const user = req.user;
@@ -49,4 +49,16 @@ export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
             message: "Invalid card data"
          })   
     }
+
+    const restaurantId = firstCartItem.restaurantId._id;
+    const restaurantName = await Restaurant.findById(restaurantId)
+    
+
+    if(!restaurantName){
+        return res.status(404).json({
+            message: "Restaurant not found"
+        })
+    }
+
+    
 })
