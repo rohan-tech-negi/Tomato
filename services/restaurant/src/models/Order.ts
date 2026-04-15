@@ -119,37 +119,44 @@ const OrderSchema = new Schema<IOrder>({
         },
         latitude:{
             type: Number,
-            required: true
+            
         },
         longitude:{
             type: Number,
-            required: true
+            
         }
     },
     status:{
         type: String,
-        required: true
+        enum:[
+            "placed",
+            "accepted",
+            "preparing",
+            "ready_for_rider",
+            "rider_assigned",
+            "picked_up",
+            "delivered",
+            "cancelled"
+        ],
+        default: "placed"
     },
     paymentMethod:{
         type: String,
+        enum:["razorpay", "stripe"],
         required: true
     },
     paymentStatus:{
         type: String,
-        required: true
+        enum:["pending", "paid", "failed"],
+        default: "pending"
     },
     expiresAt:{
         type: Date,
-        required: true
+        index:{
+            expireAfterSeconds: 0
+        }
     },
-    createdAt:{
-        type: Date,
-        required: true
-    },
-    updatedAt:{
-        type: Date,
-        required: true
-    }
+    
 }, {timestamps: true})
 
 export default mongoose.model<IOrder>("Order", OrderSchema)
