@@ -1,6 +1,9 @@
 import { AuthenticatedRequest } from "../middleware/isAuth.js";
 import TryCatch from "../middleware/trycatch.js";
 import Address from "../models/Address.js";
+import Cart from "../models/Cart.js";
+import { IMenuItems } from "../models/MenuItems.js";
+import { Irestaurant } from "../models/Restaurant.js";
 
 export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
     const user = req.user;
@@ -29,5 +32,21 @@ export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
         })
     }
 
-    const 
+    const cartItems = await Cart.find({
+        userId: user._id
+    }).populate<{itemId: IMenuItems, restaurantId: Irestaurant}>("itemId").populate("restaurantId")
+
+    if(cartItems.length === 0){
+        return res.status(400).json({
+            message: "cart is empty"
+        })
+    }
+
+    const firstCartItem = cartItems[0]
+
+    if(!firstCartItem || !firstCartItem.restaurantId){
+         return res.status(400).json({
+            message: "Invalid card data"
+         })   
+    }
 })
