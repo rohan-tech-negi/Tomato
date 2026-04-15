@@ -51,14 +51,39 @@ export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
     }
 
     const restaurantId = firstCartItem.restaurantId._id;
-    const restaurantName = await Restaurant.findById(restaurantId)
-    
+    const restaurant = await Restaurant.findById(restaurantId)
 
-    if(!restaurantName){
+
+    if(!restaurant){
         return res.status(404).json({
             message: "Restaurant not found"
         })
     }
+
+
+    if(!restaurant.isOpen){
+        return res.status(404).json({
+            message: "Sorry this reaturant is closed for now"
+        })
+    }
+
+    let subtotal = 0;
+    const orderItem = cartItems.map((cart)=>{
+        const item = cart.itemId;
+        if(!item){
+            throw new Error("Invalid cart item")
+        }
+
+        const itemTotal = item.price * cart.quantity;
+        subtotal += itemTotal;
+
+        return {
+            itemId: item._id,
+            name: item.name,
+            price: item.price,
+            quantity: cart.quantity
+        }
+    })
 
     
 })
