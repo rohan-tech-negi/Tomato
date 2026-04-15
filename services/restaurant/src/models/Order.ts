@@ -8,6 +8,8 @@ export interface IOrder extends Document{
     riderId? : string | null;
     riderPhone: number | null;
     riderName: string | null;
+    distance: number;
+    riderAmount: number
 
     items:{
         itemId: string;
@@ -18,5 +20,29 @@ export interface IOrder extends Document{
 
     subtotal: number
     deliveryFee: number;
-    platformFee
+    platformFee: number;
+
+    totalAmount: number;
+
+    addressId: string;
+
+    deliveryAddress:{
+        formattedAddress: string;
+        mobile: number;
+        latitude: number;
+        longitude: number
+    }
+
+    status: | "placed" | "accepted" | "preparing" | "ready_for_rider" | "rider_assigned" | "picked_up" | "delivered" | "cancelled";
+
+    paymentMethod: "razorpay" | "stripe" ;
+
+    
+    paymentStatus: "pending" | "paid" | "failed";
+
+    expiresAt: Date;
+    createdAt: Date;
+    updatedAt: Date;
+    
 }
+
