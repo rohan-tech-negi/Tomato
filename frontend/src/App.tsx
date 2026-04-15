@@ -15,6 +15,7 @@ import  Restaurant from './pages/Restaurant'
 import RestaurantPage from './pages/RestaurantPage'
 import Cart from './pages/Cart'
 import AddAddressPage from './pages/Address'
+import Checkout from './pages/Checkout'
 const App = () => {
 
   const {user} = useAppData()
@@ -38,6 +39,7 @@ const App = () => {
         <Route element={<ProtectedRoute></ProtectedRoute>}>
          <Route path="/" element={<Home />} />
          <Route path="/address" element={<AddAddressPage></AddAddressPage>} />
+         <Route path="/checkoout" element={<Checkout></Checkout>} />
          <Route path='/restaurant/:id' element={<RestaurantPage></RestaurantPage>}></Route>
          <Route path='/cart' element={<Cart></Cart>}></Route>
          <Route path='/select-role' element={<SelectRole></SelectRole>}></Route>
