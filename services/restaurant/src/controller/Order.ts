@@ -3,6 +3,7 @@ import TryCatch from "../middleware/trycatch.js";
 import Address from "../models/Address.js";
 import Cart from "../models/Cart.js";
 import { IMenuItems } from "../models/MenuItems.js";
+import Order from "../models/Order.js";
 import Restaurant, { Irestaurant } from "../models/Restaurant.js";
 
 export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
@@ -14,7 +15,7 @@ export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
         })
     }
 
-    const {paymentMethod, addressId} = req.body
+    const {paymentMethod, addressId, distance} = req.body
     if(!addressId){
         return res.status(400).json({
             message: "Address is required"
@@ -94,8 +95,44 @@ export const createOrder = TryCatch(async(req:AuthenticatedRequest, res)=>{
 
     const [longitude, latitude] = address.location.coordinates;
 
+    const riderAmount = Math.ceil(distance) * 17
 
-    const order = await 
+
+    const order = await Order.create({
+        userId: user._id.toString(),
+        restaurantId: restaurant.toString(),
+        restaurantName: restaurant.name,
+        riderId: null,
+        riderPhone: null,
+        riderName: null,
+        distance: 0,
+        riderAmount,
+        items: orderItem,
+        subtotal,
+        deliveryFee,
+        platformFee,
+        totalAmount,
+        addressId: address._id.toString(),
+        deliveryAddress: {
+            formattedAddress: address.formattedAddress,
+            mobile: address.mobile,
+            latitude,
+            longitude
+        },
+        paymentMethod,
+        paymentStatus: "pending",
+        status: "pending",
+        expiresAt
+    })
+
+    await Cart.deleteMany({
+        userId: user._id
+    })
+
+    return res.status(201).json({
+        message: "Order created successfully",
+        order
+    })
 
 
 
