@@ -2,6 +2,8 @@ import axios from "axios"
 import { useAppData } from "../context/AppContext"
 import { useEffect, useState } from "react"
 import { restaurantService } from "../main"
+import { useNavigate } from "react-router-dom"
+import type { IRestaurant } from "../types"
 
 
 interface Address{
@@ -23,7 +25,7 @@ const Checkout = () => {
 
   const[ loadingStripe, setLoadingStripe] = useState(false)
 
-  const[ createOrder, setCreateOrder] = useState(false)
+  const[ creatingOrder, setCreatingOrder] = useState(false)
 
   useEffect(()=>{
     const fetchAddresses = async()=>{
@@ -46,7 +48,31 @@ const Checkout = () => {
     }
     fetchAddresses()
   },[cart])
-  console.log(addresses)
+  if(!cart || cart.length === 0){
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-xl font-semibold">Your cart is empty</p>
+      </div>
+    )
+  }
+  const navigate = useNavigate()
+  const restaurant = cart[0].restaurantId as IRestaurant
+
+  const deliveryFee = subTotal < 250 ? 49 : 0
+
+  const platformFee = 7;
+
+  const grandTotal = subTotal + deliveryFee + platformFee;
+
+  const createOrder = async(paymentMethod: "razorpay" | "stripe")=>{
+    if(!selectedAddressId){
+      alert("Please select an address")
+      return;
+    }
+    setCreatingOrder(true)
+    
+
+  }
 
   
   return (
