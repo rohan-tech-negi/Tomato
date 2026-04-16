@@ -1,6 +1,7 @@
 import {Request, Response} from "express"
 import axios from "axios"
 import { razorpay } from "../config/razorpay.js";
+import { verifyRazorpaySignature } from "../config/verifyRazorpay.js";
 
 export const createRazorpayOrder = async(req:Request, res: Response)=>{
     const {orderId} = req.body
@@ -22,4 +23,12 @@ export const createRazorpayOrder = async(req:Request, res: Response)=>{
 
 }
 
-export const 
+export const verifyRazorpayPayment = async(req: Request, res:Response)=>{
+    const{razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId} = req.body
+
+    const isValid = verifyRazorpaySignature(
+        razorpay_order_id,
+        razorpay_payment_id,
+        razorpay_signature
+    )
+}
