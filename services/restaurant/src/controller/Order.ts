@@ -154,4 +154,16 @@ export const fetchOrderForPayment = TryCatch(async(req: AuthenticatedRequest, re
             message: " Order not found"
         })
     }
+
+    if(order.paymentStatus !== "pending"){
+        return res.status(400).json({
+            message: " Order already payed"
+        })
+    }
+
+    res.json({
+        orderId: order._id,
+        amount: order.totalAmount,
+        currency: "INR"
+    })
 })
