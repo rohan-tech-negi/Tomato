@@ -6,6 +6,6 @@ const router = express.Router()
 
 
 router.post("/new", isAuth, createOrder)
-router.post("/payment", fetchOrderForPayment)
+router.post("/payment/:id", fetchOrderForPayment)
 
 export default router;
