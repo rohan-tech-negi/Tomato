@@ -146,4 +146,12 @@ export const fetchOrderForPayment = TryCatch(async(req: AuthenticatedRequest, re
             message: "Forbidden"
         })
     }
+
+    const order = await Order.findById(req.params.id);
+
+    if(!order){
+        return res.status(404).json({
+            message: " Order not found"
+        })
+    }
 })
