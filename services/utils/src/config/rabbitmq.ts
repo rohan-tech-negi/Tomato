@@ -3,7 +3,15 @@ import amqp from "amqplib"
 let channel: amqp.Channel;
 
 export const connectRabbitMQ = async()=>{
-    const connection = amqp.connect(process.env.RABBITMQ_URL!)
+    const connection = await amqp.connect(process.env.RABBITMQ_URL!)
 
-    channle = 
+    channel = await connection.createChannel();
+
+await channel.assertQueue(process.env.PAYMENT_QUEUE!,{
+    durable: true
+})
+
+console.log("rabbitMQ connected to payment queue")
 }
+
+export const getChannel = ()=> channel
