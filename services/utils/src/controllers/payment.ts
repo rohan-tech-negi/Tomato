@@ -31,4 +31,8 @@ export const verifyRazorpayPayment = async(req: Request, res:Response)=>{
         razorpay_payment_id,
         razorpay_signature
     )
+    if(!isValid){
+    return res.status(400).json({message: "Invalid payment"})
 }
+}
+
