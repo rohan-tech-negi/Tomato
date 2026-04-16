@@ -7,7 +7,10 @@ import itemRoutes from "./routes/menuItem.js"
 import cartRoutes from "./routes/cart.js"
 import addressRoutes from "./routes/Address.js"
 import OrderRoutes from "./routes/Order.js"
+import { connectRabbitMQ } from "./config/rabbitmq.js";
 dotenv.config();
+
+connectRabbitMQ()
 
 const app = express();
 

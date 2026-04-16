@@ -11,7 +11,7 @@ await channel.assertQueue(process.env.PAYMENT_QUEUE!,{
     durable: true
 })
 
-console.log("rabbitMQ connected to payment queue")
+console.log("conneted to rabbitmq(resturant service)")
 }
 
 export const getChannel = ()=> channel
