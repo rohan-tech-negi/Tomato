@@ -5,7 +5,10 @@ import dotenv from "dotenv";
 import cloudinary from "cloudinary";
 import cors from "cors";
 import uploadRouter from "./routes/cloudinary.js";
+import { connectRabbitMQ } from "./config/rabbitmq.js";
 dotenv.config();
+
+connectRabbitMQ();
 
 const app = express();
 
