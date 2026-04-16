@@ -2,6 +2,7 @@ import {Request, Response} from "express"
 import axios from "axios"
 import { razorpay } from "../config/razorpay.js";
 import { verifyRazorpaySignature } from "../config/verifyRazorpay.js";
+import { publishPaymentSuccess } from "../config/payment.producer.js";
 
 export const createRazorpayOrder = async(req:Request, res: Response)=>{
     const {orderId} = req.body
@@ -34,5 +35,17 @@ export const verifyRazorpayPayment = async(req: Request, res:Response)=>{
     if(!isValid){
     return res.status(400).json({message: "Invalid payment"})
 }
+
+await publishPaymentSuccess({
+    orderId,
+    paymentId: razorpay_payment_id,
+    provider:"razorpay"
+}
+
+)
+
+res.json({
+    message: " payment verified successfully"
+})
 }
 
