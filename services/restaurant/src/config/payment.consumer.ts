@@ -43,9 +43,12 @@ export const startPaymentConsumer = async()=>{
                 return;
             }
 
-            console.log("Order updated successfully", orderId)
+            console.log("Order placed", order._id)
+
+            // socket work
             channel.ack(msg)
         } catch (error) {
+            console.error("Payment consumer error", error)
             
         }
     })
