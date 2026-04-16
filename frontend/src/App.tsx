@@ -39,7 +39,7 @@ const App = () => {
         <Route element={<ProtectedRoute></ProtectedRoute>}>
          <Route path="/" element={<Home />} />
          <Route path="/address" element={<AddAddressPage></AddAddressPage>} />
-         <Route path="/checkoout" element={<Checkout></Checkout>} />
+         <Route path="/checkout" element={<Checkout></Checkout>} />
          <Route path='/restaurant/:id' element={<RestaurantPage></RestaurantPage>}></Route>
          <Route path='/cart' element={<Cart></Cart>}></Route>
          <Route path='/select-role' element={<SelectRole></SelectRole>}></Route>

@@ -45,7 +45,8 @@ const Checkout = () => {
       }
     }
     fetchAddresses()
-  },[])
+  },[cart])
+  console.log(addresses)
 
   
   return (
