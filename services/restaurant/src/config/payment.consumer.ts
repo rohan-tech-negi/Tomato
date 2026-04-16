@@ -22,8 +22,29 @@ export const startPaymentConsumer = async()=>{
                 {
                     _id: orderId,
                     paymentStatus: {$ne: "paid"}
+                },
+                {
+                    $set: {
+                        paymentStatus: "paid",
+                        status: "placed"
+                    },
+                    $unset: {
+                        expiresAt: 1
+                    }
+                },
+                {
+                    new: true
                 }
             )
+
+            if(!order){
+                console.log("Order not found for payment update", orderId)
+                channel.ack(msg)
+                return;
+            }
+
+            console.log("Order updated successfully", orderId)
+            channel.ack(msg)
         } catch (error) {
             
         }
