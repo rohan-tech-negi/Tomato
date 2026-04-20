@@ -182,6 +182,39 @@ const Checkout = () => {
           }
         </p>
       </div>
+      <div className="rounded-xl bg-white p-4 shadow-sm space-y-3">
+  <h3 className="font-semibold">Delivery Address</h3>
+
+  {loadingAddress ? (
+    <p className="text-sm text-gray-500">Loading addresses...</p>
+  ) : addresses.length === 0 ? (
+    <p className="text-sm text-gray-400">
+      No address found. Please add one
+    </p>
+  ) : (
+    addresses.map((add) => (
+      <label
+        key={add._id}
+        className={`flex gap-3 rounded-lg border p-3 cursor-pointer transition ${
+          selectedAddressId === add._id
+            ? "border-red-500 bg-red-50"
+            : "border-gray-200 hover:border-gray-400"
+        }`}
+      >
+        <input
+          type="radio"
+          name="address"
+          checked={selectedAddressId === add._id}
+          onChange={() => setSelectedAddressId(add._id)}
+        />
+        <div>
+          <p className="font-medium">{add.name}</p>
+          <p className="text-sm text-gray-500">{add.street}</p>
+        </div>
+      </label>
+    ))
+  )}
+</div>
     </div>
   )
 }
