@@ -70,7 +70,18 @@ const Checkout = () => {
       return;
     }
     setCreatingOrder(true)
-    
+    try {
+      const {data} = await axios.post(`${restaurantService}/api/order/new`, {
+        paymentMethod,
+        addressId: selectedAddressId
+      },{
+        headers:{
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+    } catch (error) {
+      
+    }
 
   }
 
