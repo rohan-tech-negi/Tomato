@@ -3,7 +3,7 @@ import { useAppData } from "../context/AppContext"
 import { useEffect, useState } from "react"
 import { restaurantService, utilsService } from "../main"
 import { useNavigate } from "react-router-dom"
-import type { IRestaurant } from "../types"
+import type { ICart, IMenuItems, IRestaurant } from "../types"
 import toast from "react-hot-toast"
 
 
@@ -14,7 +14,7 @@ interface Address{
 }
 
 const Checkout = () => {
-  const{cart, subTotal, quantity} = useAppData()
+  const { cart, subtotal: subTotal, Quantity: quantity } = useAppData()
   const navigate = useNavigate()
 
   const [addresses, setAddresses] = useState<Address[]>([])
@@ -214,6 +214,63 @@ const Checkout = () => {
       </label>
     ))
   )}
+</div>
+
+<div className="rounded-xl bg-white p-4 shadow-sm space-y-4">
+  <h3 className="font-semibold">Order Summery</h3>
+
+  {
+    cart.map((cartItem: ICart)=>{
+      const item = cartItem.itemId as IMenuItems;
+      return <div className="flex justify-between text-sm" key={cartItem._id}>
+        <div className="flex items-center gap-3">
+          <img src={item.image} alt={item.name} className="w-12 h-12 rounded-lg object-cover" />
+          <div>
+            <p className="font-medium">{item.name}</p>
+            <p className="text-sm text-gray-500">{cartItem.quantity} x ₹{item.price}</p>
+          </div>
+        </div>
+        <p className="font-medium">₹{item.price * cartItem.quantity}</p>
+      </div>
+    })
+  }
+
+  <hr />
+
+  <div className="space-y-2">
+    <div className="flex justify-between text-sm">
+      <span className="text-gray-600">Items ({quantity})</span>
+      <span className="font-medium">₹{subTotal}</span>
+    </div>
+
+    <div className="flex justify-between text-sm">
+      <span className="text-gray-600">Delivery Fee</span>
+      <span className="font-medium">{deliveryFee === 0 ? "Free" : `₹${deliveryFee}`}</span>
+    </div>
+
+    <div className="flex justify-between text-sm">
+      <span className="text-gray-600">Platform Fee</span>
+      <span className="font-medium">₹{platformFee}</span>
+    </div>
+
+    <hr className="my-2" />
+    
+    
+
+  {subTotal < 250 && (
+          <p className="text-xs text-orange-600">
+            Add items worth ₹{250 - subTotal} more to get free delivery
+          </p>
+        )}
+
+        
+        <div className="flex justify-between text-base font-bold">
+      <span>Grand Total</span>
+      <span>₹{grandTotal}</span>
+    </div>
+  </div>
+
+
 </div>
     </div>
   )
