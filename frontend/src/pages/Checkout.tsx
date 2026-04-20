@@ -116,19 +116,34 @@ const Checkout = () => {
     
     handler: async(response: any)=>{
       try {
+        await axios.post(`${utilsService}/api/payment/verify`,{
+         
+          razorpay_order_id : response.razorpay_order_id,
+           razorpay_payment_id : response.razorpay_payment_id,
+            razorpay_signature : response.razorpay_signature,
+             orderId
+        })
+
+        toast.success("payment successful")
+        navigate("/paymentsuccess/" + response.razorpay_payment_id)
         
       } catch (error) {
-        
+        toast.error("payment verification failed")
       }
-    }
+    },
     
     theme: {
         "color": "#E23744"
     }
 };
-    }
+
+    const razorpay = new (window as any).Razorpay(options);
+    razorpay.open()
    } catch (error) {
-    
+    console.log(error)
+    toast.error("payment failed please refresh page")
+   } finally{
+    setLoadingRazorpay(false)
    } 
   }
 
