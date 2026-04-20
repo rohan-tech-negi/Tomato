@@ -9,12 +9,13 @@ import toast from "react-hot-toast"
 
 interface Address{
   _id: string,
-  formatterAddress: string,
+  formattedAddress: string,
   mobile: number
 }
 
 const Checkout = () => {
   const{cart, subTotal, quantity} = useAppData()
+  const navigate = useNavigate()
 
   const [addresses, setAddresses] = useState<Address[]>([])
 
@@ -40,7 +41,7 @@ const Checkout = () => {
              Authorization: `Bearer ${localStorage.getItem("token")}`
           }
         })
-        setAddresses(data || [])
+        setAddresses(data.addresses || [])
       } catch (error) {
         console.log(error)
       }finally{
@@ -56,7 +57,6 @@ const Checkout = () => {
       </div>
     )
   }
-  const navigate = useNavigate()
   const restaurant = cart[0].restaurantId as IRestaurant
 
   const deliveryFee = subTotal < 250 ? 49 : 0
@@ -205,11 +205,11 @@ const Checkout = () => {
           type="radio"
           name="address"
           checked={selectedAddressId === add._id}
-          onChange={() => setSelectedAddressId(add._id)}
+          onChange={() => setselectedAddressId(add._id)}
         />
         <div>
-          <p className="font-medium">{add.name}</p>
-          <p className="text-sm text-gray-500">{add.street}</p>
+          <p className="font-medium">{add.formattedAddress}</p>
+          <p className="text-sm text-gray-500">{add.mobile}</p>
         </div>
       </label>
     ))
