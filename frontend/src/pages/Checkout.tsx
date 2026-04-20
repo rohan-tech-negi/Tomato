@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { restaurantService } from "../main"
 import { useNavigate } from "react-router-dom"
 import type { IRestaurant } from "../types"
+import toast from "react-hot-toast"
 
 
 interface Address{
@@ -79,10 +80,27 @@ const Checkout = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
       })
+      return data;
     } catch (error) {
-      
+      toast.error("failed to creae order")
+    }
+    finally{
+      setCreatingOrder(false)
     }
 
+  }
+
+  const paywithRazorpay = async()=>{
+   try {
+    setLoadingRazorpay(true)
+
+    const order = await createOrder("razorpay")
+    if(!order) return;
+
+    
+   } catch (error) {
+    
+   } 
   }
 
   
