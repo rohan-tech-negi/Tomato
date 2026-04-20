@@ -9,7 +9,7 @@ import { connectRabbitMQ } from "./config/rabbitmq.js";
 import paymentRoutes from "./routes/payment.js"
 dotenv.config();
 
-connectRabbitMQ();
+connectRabbitMQ().catch(err => console.error("Failed to connect to RabbitMQ in Utils service:", err));
 
 const app = express();
 

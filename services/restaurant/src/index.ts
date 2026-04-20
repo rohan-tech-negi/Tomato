@@ -11,8 +11,12 @@ import { connectRabbitMQ } from "./config/rabbitmq.js";
 import { startPaymentConsumer } from "./config/payment.consumer.js";
 dotenv.config();
 
-await connectRabbitMQ()
-startPaymentConsumer()
+try {
+    await connectRabbitMQ();
+    startPaymentConsumer();
+} catch (error) {
+    console.error("Failed to connect to RabbitMQ in Restaurant service:", error);
+}
 
 const app = express();
 
