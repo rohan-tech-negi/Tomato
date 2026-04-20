@@ -147,6 +147,25 @@ const Checkout = () => {
    } 
   }
 
+  const payWithStripe = async()=>{
+    try {
+      setLoadingStripe(true)
+      const order = await createOrder("stripe")
+
+        if(!order) return;
+
+        console.log("Stripe checkout", order)
+      
+    } catch (error) {
+
+      console.log(error)
+      toast.error("payment failed")
+      
+    }finally{
+      setLoadingStripe(false)
+    }
+  }
+
   
   return (
     <div>Checkout</div>
