@@ -292,6 +292,20 @@ const Checkout = () => {
   )}
   {" "}Pay with razorpay
 </button>
+
+
+<button
+  disabled={!selectedAddressId || loadingRazorpay || creatingOrder}
+  onClick={payWithStripe}
+  className="flex w-full items-center justify-center gap-2 rounded-lg bg-black py-3 text-sm font-semibold text-white hover:bg-gray-800 disabled:opacity-50"
+>
+  {loadingStripe ? (
+    <BiLoader size={18} className="animate-spin" />
+  ) : (
+    <BiCreditCard size={18} />
+  )}
+  {" "}Pay with Stripe
+</button>
 </div>
     </div>
   )
