@@ -5,6 +5,7 @@ import { restaurantService, utilsService } from "../main"
 import { useNavigate } from "react-router-dom"
 import type { ICart, IMenuItems, IRestaurant } from "../types"
 import toast from "react-hot-toast"
+import { BiCreditCard, BiLoader } from "react-icons/bi"
 
 
 interface Address{
@@ -263,7 +264,7 @@ const Checkout = () => {
           </p>
         )}
 
-        
+
         <div className="flex justify-between text-base font-bold">
       <span>Grand Total</span>
       <span>₹{grandTotal}</span>
@@ -271,6 +272,26 @@ const Checkout = () => {
   </div>
 
 
+</div>
+
+<div className="rounded-xl bg-white p-4 shadow-sm space-y-3 ">
+        <h3 className="font-semibold">
+          Payment Method
+        </h3>
+        
+
+        <button
+  disabled={!selectedAddressId || loadingRazorpay || creatingOrder}
+  onClick={paywithRazorpay}
+  className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#2D7FF9] py-3 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50"
+>
+  {loadingRazorpay ? (
+    <BiLoader size={18} className="animate-spin" />
+  ) : (
+    <BiCreditCard size={18} />
+  )}
+  {" "}Pay with razorpay
+</button>
 </div>
     </div>
   )
