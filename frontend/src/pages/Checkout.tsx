@@ -168,7 +168,21 @@ const Checkout = () => {
 
   
   return (
-    <div>Checkout</div>
+    <div className="mx-auto max-w-4xl px-4 py-6 space-y-6">
+      <h1 className="text-2xl font-bold">Checkout</h1>
+
+      <div className="rounded-xl bg-white p-4 shadow-sm">
+        <h1 className="text-lg font-semibold">
+          {restaurant.name}
+        </h1>
+
+        <p className="text-sm text-gray-500">
+          {
+            restaurant.autoLocation.formattedAddress
+          }
+        </p>
+      </div>
+    </div>
   )
 }
 
