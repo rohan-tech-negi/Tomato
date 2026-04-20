@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useAppData } from "../context/AppContext"
 import { useEffect, useState } from "react"
-import { restaurantService } from "../main"
+import { restaurantService, utilsService } from "../main"
 import { useNavigate } from "react-router-dom"
 import type { IRestaurant } from "../types"
 import toast from "react-hot-toast"
@@ -97,7 +97,36 @@ const Checkout = () => {
     const order = await createOrder("razorpay")
     if(!order) return;
 
+    const{orderId, amount} = order
+
+    const{data} = await axios.post(`${utilsService}/api/payment/create`,{
+      orderId
+    })
+
+    const {razorpayOrderId, key} = data
+
+    const options = {
+      key,
+      amount: amount * 100,
+      currency: "INR",
+    name: "Tomato",
+    description: "Food order payment",
     
+    order_id: razorpayOrderId, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    
+    handler: async(response: any)=>{
+      try {
+        
+      } catch (error) {
+        
+      }
+    }
+    
+    theme: {
+        "color": "#E23744"
+    }
+};
+    }
    } catch (error) {
     
    } 
